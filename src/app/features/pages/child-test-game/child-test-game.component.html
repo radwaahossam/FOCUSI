@@ -1,0 +1,64 @@
+<div class="wrapper">
+    <ul class="cards">
+      <li class="card" *ngFor="let card of cardsList; let i = index" #cardEl (click)="flipCard(cardEl, i)">
+        <div class="view front-view">
+            <img src="assets/images/fruits/background.jpg" alt="icon" />
+        </div>
+        <div class="view back-view">
+          <img [src]="cardImages[i]" alt="card-img" />
+        </div>
+      </li>
+      <div class="details">
+        <p class="time">Time: <span><b>{{ time }}</b>s</span></p>
+        <p class="flips">Flips: <span><b>{{ flips }}</b></span></p>
+      </div>
+    </ul>
+  </div>
+  
+  <!-- شاشة البداية -->
+  <div class="intro-overlay" [class.hidden]="!showIntro">
+    <h1>Welcome to Cards Game.</h1>
+    <p>Please, Open your camera to evaluate visual focus.</p>
+    <button (click)="startWithCamera()">Open Camera & Start</button>
+    <button (click)="startWithoutCamera()">Dismiss</button>
+  </div>
+  
+  <!-- زر القائمة -->
+  <div class="menu-button">
+    <button class="menu-toggle-btn" (click)="openMenu()">Menu</button>
+  </div>
+  
+  <!-- قائمة الخيارات -->
+  <div class="game-menu-overlay" [class.hidden]="!showMenu">
+    <div class="game-menu-box">
+      <button (click)="resumeGame()">Continue</button>
+      <button (click)="restartGame()">Retry</button>
+      <button (click)="toggleSound()">
+        {{ isSoundOn ? '🔊 Sound: On' : '🔇 Sound: Off' }}
+      </button>
+      <button (click)="toggleCamera()">
+        {{ cameraStream ? '📷Camera: On' : '❌Camera: Off' }}
+      </button>
+      <button (click)="handleExit()">Exit</button>
+    </div>
+  </div>
+  
+  <!-- مؤثرات الكونفيتي -->
+  <canvas id="confetti-canvas"></canvas>
+  
+  <!-- شاشة النجاح -->
+  <div class="congrats-overlay" [class.hidden]="!showCongrats">
+    <h1>🎉 Congratulations! 🎉</h1>
+    <p>You matched all the cards!</p>
+    <p>Total Time: <span id="final-time">{{ time }}</span>s</p>
+    <p>Total Flips: <span id="final-flips">{{ flips }}</span></p>
+    <button (click)="handleExit()">Exit</button>
+  </div>
+  
+  <!-- شاشة الخسارة -->
+  <div class="over-overlay" [class.hidden]="!gameOver">
+    <h1>Time's Up!</h1>
+    <p>Game Over</p>
+    <button (click)="restartGame()">Try Again</button>
+  </div>
+  

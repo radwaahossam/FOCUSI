@@ -1,0 +1,160 @@
+<!-- <form [formGroup]="form" class="p-6 text-center pt-36  text-white">
+    <div>
+      <div class="flex items-center gap-2 mb-6">
+        <h2 class="text-4xl font-bold text-center">Parents Test Based on Conners’ Rating Scales</h2>
+      </div>
+  
+      <ng-container *ngFor="let question of questions.slice((currentPage - 1) * 10, currentPage * 10); let i = index; trackBy: trackByIndex">
+        <div class="mb-4 text-start">
+          <p class="font-semibold text-lg">{{ (currentPage - 1) * 10 + i + 1 }}. {{ question }}</p>
+          <div class="flex flex-wrap gap-4 pl-4">
+            <label *ngFor="let option of options" class="flex items-center gap-2">
+                <input
+                type="radio"
+                [formControl]="getFormControl((currentPage - 1) * 10 + i)"
+                [value]="option.value"
+                [name]="'question' + ((currentPage - 1) * 10 + i)"
+                class="form-radio text-white focus:ring-white"
+              />              
+              {{ option.label }}
+            </label>
+          </div>
+        </div>
+      </ng-container>
+  
+      <div class="flex justify-between pt-4">
+        <button
+          *ngIf="currentPage > 1"
+          type="button"
+          (click)="prevPage()"
+          class="bg-white text-red-700 font-semibold px-6 py-2 rounded-xl hover:bg-red-100"
+        >
+          Back
+        </button>
+  
+        <button
+          *ngIf="currentPage < 2"
+          type="button"
+          (click)="nextPage()"
+          class="ml-auto bg-white text-red-700 font-semibold px-6 py-2 rounded-xl hover:bg-red-100"
+        >
+          Next
+        </button>
+  
+        <button
+          *ngIf="currentPage === 2"
+          type="submit"
+          class="ml-auto bg-white text-red-700 font-semibold px-6 py-2 rounded-xl hover:bg-red-100"
+        >
+          Submit
+        </button>
+      </div>
+    </div>
+  </form>
+   -->
+
+
+
+<!-- 
+   <form [formGroup]="form" class="p-6 text-center  text-white">
+        <h2 class="text-4xl font-bold text-center mb-10">Parents Test Based on Conners’ Rating Scales</h2>
+    <div formArrayName="answers" class="mt-20">
+      <div
+        *ngFor="let question of questions.slice((currentPage - 1) * 10, currentPage * 10); let i = index; trackBy: trackByIndex"
+        class="mb-4 text-start"
+        [formGroupName]="(currentPage - 1) * 10 + i"
+      >
+        <p class="font-semibold text-lg">
+          {{ (currentPage - 1) * 10 + i + 1 }}. {{ question }}
+        </p>
+  
+        <div class="flex flex-wrap gap-10 pl-10 pt-4">
+          <label *ngFor="let option of options" class="flex items-center gap-2">
+            <input
+              type="radio"
+              [value]="option.value"
+              formControlName="answer"
+              class="form-radio text-white focus:ring-white"
+            />
+            {{ option.label }}
+          </label>
+        </div>
+      </div>
+    </div>
+  
+    <div class="flex justify-between pt-4">
+      <button
+        *ngIf="currentPage > 1"
+        type="button"
+        (click)="prevPage()"
+        class="bg-white text-red-700 font-semibold px-6 py-2 rounded-xl hover:bg-red-100"
+      >
+        Back
+      </button>
+  
+      <button
+        *ngIf="currentPage < 2"
+        type="button"
+        (click)="nextPage()"
+        class="ml-auto bg-white text-red-700 font-semibold px-6 py-2 rounded-xl hover:bg-second focus:ring-red-800 focus:outline-none"
+      >
+        Next
+      </button>
+  
+      <button
+        *ngIf="currentPage === 2"
+        type="submit"
+        class="ml-auto bg-white text-red-700 font-semibold px-6 py-2 rounded-xl hover:bg-second focus:ring-red-800 focus:outline-none"
+      >
+        Submit
+      </button>
+    </div>
+  </form> -->
+  
+
+
+  <h2 class="text-4xl font-bold text-center text-white mt-5">Parents Test Based on Conners’ Rating Scales</h2>
+
+  <div class="min-h-screen flex items-center justify-center mx-auto">
+    <div class="w-full max-w-xl">
+      <div class="bg-white p-6 rounded-2xl shadow-md">
+        <h2 class="text-lg font-medium mb-4">Question {{ currentQuestionIndex + 1 }} of {{ questions.length }}</h2>
+        <p class="text-xl font-bold mb-6">{{ currentQuestion }}</p>
+  
+        <div class="space-y-4">
+          <label
+            *ngFor="let option of options"
+            class="flex items-center p-3 border rounded-lg hover:bg-gray-100 cursor-pointer transition"
+          >
+            <input
+              type="radio"
+              name="question{{ currentQuestionIndex }}"
+              [value]="option.value"
+              (change)="onSelectAnswer(option.value)"
+              [checked]="currentAnswerControl.value === option.value"
+              class="form-radio h-5 w-5 text-blue-600"
+            />
+            <span class="ml-3 text-base">{{ option.label }}</span>
+          </label>
+        </div>
+
+        <div class="flex justify-between mt-6">
+            <button 
+              *ngIf="currentQuestionIndex > 0"
+              (click)="prevQuestion()" 
+              class="bg-[#A82222] hover:bg-red-900 text-white px-6 py-2 rounded-xl font-medium transition">
+              Previous
+            </button>
+          
+            <div *ngIf="currentQuestionIndex === 0"></div>
+            <button
+              (click)="currentQuestionIndex === questions.length - 1 ? onSubmit() : nextQuestion()"
+              class="bg-[#A82222] hover:bg-red-900 text-white px-6 py-2 rounded-xl font-medium transition">
+              {{ currentQuestionIndex === questions.length - 1 ? 'Submit' : 'Next Question' }}
+            </button>
+          </div>
+          
+      </div>
+    </div>
+  </div>
+  

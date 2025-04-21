@@ -1,0 +1,353 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body, html {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: url("../../../../assets/images/fruits/background.jpg") no-repeat center center fixed;
+  background-size: cover;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+::selection {
+  color: #fff;
+  background: #6563ff;
+}
+
+/* ======================= */
+/* باقي التنسيقات كما هي */
+/* ======================= */
+
+.wrapper {
+  width: 100%;
+  height: 100%;
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.cards,
+.card,
+.view,
+.details,
+p {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cards {
+  width: 900px;
+  height: 700px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.cards .card {
+  cursor: pointer;
+  position: relative;
+  perspective: 1000px;
+  transform-style: preserve-3d;
+  height: calc(100% / 4 - 10px);
+  width: calc(100% / 4 - 10px);
+}
+
+.card.shake {
+  animation: shake 0.35s ease-in-out;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-13px); }
+  40% { transform: translateX(13px); }
+  60% { transform: translateX(-8px); }
+  80% { transform: translateX(8px); }
+}
+
+.cards .card .view {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  user-select: none;
+  pointer-events: none;
+  background: #fff;
+  border-radius: 7px;
+  backface-visibility: hidden;
+  transition: transform 0.25s linear;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+.card .front-view img {
+  max-width: 17px;
+}
+
+.card .back-view {
+  transform: rotateY(-180deg);
+}
+
+.card .back-view img {
+  max-width: 130px;
+}
+
+.card.flip .front-view {
+  transform: rotateY(180deg);
+}
+
+.card.flip .back-view {
+  transform: rotateY(0);
+}
+
+/* باقي التنسيقات... نفس كودك القديم تمامًا */
+
+.details {
+    width: 900px;
+    margin-top: 15px;
+    padding: 10px 20px;
+    background: #fff;
+    border-radius: 7px;
+    justify-content: space-between;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .details p {
+    font-size: 30px;
+    height: 17px;
+    padding-right: 18px;
+    border-right: 1px solid #ccc;
+  }
+  
+  .details p span {
+    margin-left: 8px;
+  }
+  
+  .details p b {
+    font-weight: 500;
+  }
+  
+  /* =======================
+     Menu Toggle Button
+  ======================= */
+  .menu-toggle-btn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 200;
+    background: #e53935;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-size: 22px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+    transition: background 0.3s, color 0.3s;
+  }
+  
+  .menu-toggle-btn:hover {
+    background: #b71c1c;
+    color: #fff;
+  }
+  
+  /* =======================
+     Game Menu Overlay
+  ======================= */
+  .game-menu-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(5px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+    transition: opacity 0.3s ease;
+  }
+  
+  .game-menu-overlay.hidden {
+    display: none;
+  }
+  
+  .game-menu-box {
+    background: #1f1f1f;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+    text-align: center;
+    width: 300px;
+    animation: popIn 0.3s ease;
+  }
+  
+  @keyframes popIn {
+    from { transform: scale(0.7); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+  
+  .game-menu-box h2 {
+    color: #fff;
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+  }
+  
+  .game-menu-box button {
+    width: 100%;
+    margin: 10px 0;
+    padding: 12px 0;
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #fff;
+    background-color: #e53935;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  
+  .game-menu-box button:hover {
+    background-color: #b71c1c;
+  }
+  
+  /* =======================
+     Intro / Congrats / Over Overlays
+  ======================= */
+  .intro-overlay,
+  .congrats-overlay,
+  .over-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.85);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    z-index: 200;
+  }
+  
+  .intro-overlay.hidden,
+  .congrats-overlay.hidden,
+  .over-overlay.hidden {
+    display: none;
+  }
+  
+  .intro-overlay h1,
+  .congrats-overlay h1,
+  .over-overlay h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+  }
+  
+  .intro-overlay p {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+  }
+  
+  .intro-overlay button,
+  .congrats-overlay button,
+  .over-overlay button {
+    margin-top: 20px;
+    font-size: 1.2rem;
+    padding: 10px 20px;
+    background: #e53935;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  
+  .intro-overlay button:hover,
+  .congrats-overlay button:hover,
+  .over-overlay button:hover {
+    background: #b71c1c;
+    color: #fff;
+  }
+  
+  .over-overlay p {
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+  
+  /* =======================
+     Confetti
+  ======================= */
+  #confetti-canvas {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 100;
+  }
+  
+  /* =======================
+     Responsive Design
+  ======================= */
+  @media screen and (max-width: 700px) {
+    .cards {
+      width: 350px;
+      height: 350px;
+    }
+  
+    .card .front-view img {
+      max-width: 16px;
+    }
+  
+    .card .back-view img {
+      max-width: 40px;
+    }
+  }
+  
+  @media screen and (max-width: 530px) {
+    .cards {
+      width: 300px;
+      height: 300px;
+    }
+  
+    .card .back-view img {
+      max-width: 35px;
+    }
+  
+    .details {
+      margin-top: 10px;
+      padding: 0 15px;
+      height: calc(100% / 4 - 20px);
+    }
+  
+    .details p {
+      height: 15px;
+      font-size: 17px;
+      padding-right: 13px;
+    }
+  }
+  
+  @media screen and (max-width: 400px) {
+    .details {
+      width: 90%;
+      flex-direction: column;
+      gap: 10px;
+    }
+  }
+  
