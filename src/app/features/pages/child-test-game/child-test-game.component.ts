@@ -1,110 +1,173 @@
-// import { Component } from '@angular/core';
 
-// @Component({
-//   selector: 'app-child-test-game',
-//   imports: [],
-//   templateUrl: './child-test-game.component.html',
-//   styleUrl: './child-test-game.component.css'
-// })
-// export class ChildTestGameComponent {
-
-// }
-
-
-// child-test-game.component.ts
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
-import confetti from 'canvas-confetti';
 
+interface Card {
+  value: string;
+  flipped: boolean;
+  matched: boolean;
+}
 @Component({
-  standalone: true,
   selector: 'app-child-test-game',
   imports: [CommonModule],
   templateUrl: './child-test-game.component.html',
   styleUrls: ['./child-test-game.component.css']
 })
 
+
 export class ChildTestGameComponent implements OnInit {
-  @ViewChildren('cardEl') cardEls!: QueryList<ElementRef>;
-  @ViewChild('confettiCanvas') confettiCanvas!: ElementRef;
+  @ViewChild('camera') cameraElement!: ElementRef<HTMLVideoElement>;
 
+  deck: Card[] = [];
+  flippedCards: number[] = [];
+  matchedPairs = 0;
+  totalFlips = 0;
+  timeElapsed = 0;
+  timerInterval: any;
+  maxTime = 120;
 
-  cardsList = Array(8).fill(0);
-  cardImages: string[] = [];
-
-  time = 0;
-  flips = 0;
-  maxTime = 600;
-  timer: any;
-  isPaused = false;
-  isPlaying = false;
-  isSoundOn = true;
-
-  matchedCard = 0;
-  disableDeck = false;
-  showIntro = true;
-  showMenu = false;
+  gameStarted = false; // تم تعديل هذه القيمة لتكون false عند البداية
+  showStats = false;
+  showGame = false;
   showCongrats = false;
-  gameOver = false;
+  showGameOver = false;
+  showMenu = false;
+  isSoundOn = true;
+  cameraRequired = true;
 
-  cardOne: HTMLElement | null = null;
-  cardTwo: HTMLElement | null = null;
   cameraStream: MediaStream | null = null;
-  cameraInterval: any;
+  cameraTrackingInterval: any;
 
-  fruits = ['apple', 'grapes', 'orange', 'strawberry'];
+  readonly symbols = ['🍎', '🍌', '🍇', '🍓', '🍉'];
+
+  showAllCardsTemporarily = true;
+  allCardsFlipped = false;
 
   ngOnInit(): void {
-    this.shuffleCard();
+    // تم تعليق الكود الخاص بالكاميرا هنا
+    // this.requestCamera();
   }
 
-  shuffleCard() {
-    clearInterval(this.timer);
-    this.flips = this.matchedCard = this.time = 0;
-    this.cardOne = this.cardTwo = null;
-    this.disableDeck = this.isPlaying = false;
-    this.showCongrats = this.gameOver = false;
-
-    let arr = this.fruits.concat(this.fruits);
-    arr.sort(() => Math.random() > 0.5 ? 1 : -1);
-    this.cardImages = arr.map(fruit => `assets/images/fruits/${fruit}.jpg`);
+  async requestCamera() {
+    try {
+      this.cameraStream = await navigator.mediaDevices.getUserMedia({ video: true });
+      this.cameraElement.nativeElement.srcObject = this.cameraStream;
+      this.cameraElement.nativeElement.play();
+      this.cameraRequired = false;
+      this.startCameraTracking();
+    } catch (err) {
+      alert('You must open the camera');
+    }
   }
 
-  startWithCamera() {
-    navigator.mediaDevices.getUserMedia({ video: true })
-      .then(stream => {
-        this.cameraStream = stream;
-        this.startCameraTracking();
-        this.startGame();
-      })
-      .catch(() => alert('Camera access denied or not available.'));
+  async startGame() {
+    if (this.cameraRequired) {
+      await this.requestCamera();
+    }
+
+    this.matchedPairs = 0;
+    this.totalFlips = 0;
+    this.timeElapsed = 0;
+    this.showCongrats = false;
+    this.showGameOver = false;
+    this.showGame = true;
+    this.showStats = true;
+    this.gameStarted = true; // بدأ اللعبة عند الضغط على start
+    this.showAllCardsTemporarily = true;
+    this.allCardsFlipped = false;
+
+    // تجهيز الديك
+    this.deck = this.shuffle([...this.symbols, ...this.symbols].map(value => ({
+      value,
+      flipped: false,
+      matched: false
+    })));
+
+    // تقليب الكروت جميعها مؤقتًا
+    this.deck.forEach(card => card.flipped = true);
+
+    // إغلاقهم بعد فترة
+    setTimeout(() => {
+      this.deck.forEach(card => card.flipped = false);
+      this.showAllCardsTemporarily = false;
+      this.allCardsFlipped = true;
+    }, 1000);
+
+    // بدء العد التنازلي
+    this.timerInterval = setInterval(() => {
+      this.timeElapsed++;
+      if (this.timeElapsed >= this.maxTime) {
+        clearInterval(this.timerInterval);
+        this.showGameOver = true;
+        this.gameStarted = false; // إيقاف اللعبة عند انتهاء الوقت
+      }
+    }, 1000); // كل ثانية
   }
 
-  startWithoutCamera() {
-    this.startGame();
+  shuffle(array: Card[]): Card[] {
+    return array.sort(() => Math.random() - 0.5);
   }
 
-  startGame() {
-    this.showIntro = false;
-    this.shuffleCard();
+  flipCard(index: number) {
+    const card = this.deck[index];
+    if (!this.allCardsFlipped || card.flipped || card.matched || this.flippedCards.length >= 2) return;
+
+    card.flipped = true;
+    this.flippedCards.push(index);
+    this.totalFlips++;
+    this.playFlipSound(card.value);
+
+    if (this.flippedCards.length === 2) {
+      setTimeout(() => this.checkMatch(), 800);
+    }
   }
 
-  openMenu() {
-    this.showMenu = true;
-    this.isPaused = true;
-    this.disableDeck = true;
+  checkMatch() {
+    const [i1, i2] = this.flippedCards;
+    const card1 = this.deck[i1];
+    const card2 = this.deck[i2];
+
+    if (card1.value === card2.value) {
+      card1.matched = true;
+      card2.matched = true;
+      this.matchedPairs++;
+
+      if (this.matchedPairs === 5) {
+        clearInterval(this.timerInterval);
+        this.showCongrats = true;
+        this.gameStarted = false;
+        this.fireConfetti();
+      }
+    } else {
+      card1.flipped = false;
+      card2.flipped = false;
+    }
+    this.flippedCards = [];
   }
 
-  resumeGame() {
-    this.showMenu = false;
-    this.isPaused = false;
-    this.disableDeck = false;
+  playFlipSound(value: string) {
+    if (!this.isSoundOn) return;
+    const audio = new Audio(`assets/sounds/${this.getSoundName(value)}.mp3`);
+    audio.play();
   }
 
-  restartGame() {
-    this.shuffleCard();
-    this.showMenu = false;
-    this.isPaused = false;
+  getSoundName(emoji: string): string {
+    switch (emoji) {
+      case '🍎': return 'apple';
+      case '🍌': return 'banana';
+      case '🍇': return 'grapes';
+      case '🍓': return 'strawberry';
+      case '🍉': return 'watermelon';
+      default: return 'flip';
+    }
+  }
+
+  fireConfetti() {
+    console.log('🎉 Confetti!');
+  }
+
+  toggleMenu() {
+    this.showMenu = !this.showMenu;
   }
 
   toggleSound() {
@@ -115,116 +178,31 @@ export class ChildTestGameComponent implements OnInit {
     if (this.cameraStream) {
       this.stopCameraTracking();
     } else {
-      navigator.mediaDevices.getUserMedia({ video: true })
-        .then(stream => {
-          this.cameraStream = stream;
-          this.startCameraTracking();
-        })
-        .catch(() => alert('Camera access denied or not available.'));
+      this.requestCamera();
     }
   }
 
-  flipCard(card: HTMLElement, index: number) {
-    if (!this.isPlaying) {
-      this.isPlaying = true;
-      this.timer = setInterval(() => this.initTimer(), 1000);
-    }
-
-    if (card !== this.cardOne && !this.disableDeck) {
-      this.flips++;
-      card.classList.add('flip');
-
-      const flippedImg = this.cardImages[index];
-      // this.playFlipSound(flippedImg);
-
-      if (!this.cardOne) {
-        this.cardOne = card;
-        return;
-      }
-
-      this.cardTwo = card;
-      this.disableDeck = true;
-      const img1 = (this.cardOne.querySelector('.back-view img') as HTMLImageElement).src;
-      const img2 = (this.cardTwo.querySelector('.back-view img') as HTMLImageElement).src;
-      this.matchCards(img1, img2);
-    }
-  }
-
-  // playFlipSound(src: string) {
-  //   if (!this.isSoundOn) return;
-  //   const match = src.match(/\/([^\/]+)\.jpg$/);
-  //   if (match) {
-  //     const audio = new Audio(`assets/Fruits/sounds/${match[1]}.mp3`);
-  //     audio.play();
-  //   }
-  // }
-
-  matchCards(img1: string, img2: string) {
-    if (img1 === img2) {
-      this.matchedCard++;
-      this.celebrateMatch();
-
-      if (this.matchedCard === 4) {
-        setTimeout(() => this.showCongrats = true, 800);
-        clearInterval(this.timer);
-      }
-
-      this.cardOne = this.cardTwo = null;
-      this.disableDeck = false;
-    } else {
-      setTimeout(() => {
-        this.cardOne?.classList.remove('flip', 'shake');
-        this.cardTwo?.classList.remove('flip', 'shake');
-        this.cardOne = this.cardTwo = null;
-        this.disableDeck = false;
-      }, 1200);
-    }
-  }
-
-  celebrateMatch() {
-    confetti({ particleCount: 200, spread: 100, origin: { y: 0.6 } });
-  }
-
-  initTimer() {
-    if (this.isPaused) return;
-    this.time++;
-    if (this.time >= this.maxTime) {
-      clearInterval(this.timer);
-      this.gameOver = true;
-    }
+  retryGame() {
+    this.startGame();
+    this.showMenu = false;
   }
 
   handleExit() {
     this.stopCameraTracking();
-
-    const resultData = { time: this.time, flips: this.flips };
-    fetch('https://your-backend.com/api/submit-result', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(resultData)
-    })
-      .then(res => {
-        if (!res.ok) throw new Error('Failed to send results.');
-        window.history.back();
-      })
-      .catch(err => alert('Error submitting result: ' + err.message));
+    window.history.back();
   }
 
   startCameraTracking() {
-    const video = document.createElement('video');
-    video.style.display = 'none';
-    document.body.appendChild(video);
-    video.srcObject = this.cameraStream;
-    video.play();
-
+    const video = this.cameraElement.nativeElement;
     const canvas = document.createElement('canvas');
     const context = canvas.getContext('2d');
 
-    this.cameraInterval = setInterval(() => {
+    this.cameraTrackingInterval = setInterval(() => {
       if (video.readyState === video.HAVE_ENOUGH_DATA) {
         canvas.width = video.videoWidth;
         canvas.height = video.videoHeight;
         context?.drawImage(video, 0, 0, canvas.width, canvas.height);
+
         canvas.toBlob(blob => {
           if (blob) {
             const formData = new FormData();
@@ -233,7 +211,7 @@ export class ChildTestGameComponent implements OnInit {
             fetch('https://your-backend.com/api/track-player', {
               method: 'POST',
               body: formData
-            }).catch(err => console.error('Failed to send image:', err));
+            }).catch(err => console.error('Camera track failed:', err));
           }
         }, 'image/jpeg', 0.8);
       }
@@ -241,13 +219,10 @@ export class ChildTestGameComponent implements OnInit {
   }
 
   stopCameraTracking() {
-    if (this.cameraInterval) clearInterval(this.cameraInterval);
+    if (this.cameraTrackingInterval) clearInterval(this.cameraTrackingInterval);
     if (this.cameraStream) {
       this.cameraStream.getTracks().forEach(track => track.stop());
       this.cameraStream = null;
     }
-    const video = document.querySelector('video');
-    if (video) video.remove();
   }
 }
-
