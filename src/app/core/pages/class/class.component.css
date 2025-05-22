@@ -1,0 +1,38 @@
+
+.animated-text-wave span {
+    display: inline-block;
+    font-size: 2.5rem;
+    opacity: 0;
+    transform: translateY(40px) scale(2);
+    animation: waveIn 1s cubic-bezier(0.23, 1.02, 0.42, 1) forwards;
+    text-shadow: 4px 4px 4px #e43232;
+  }
+  
+  @keyframes waveIn {
+    0% {
+      opacity: 0;
+      transform: translateY(40px) scale(2) rotate(-15deg);
+      color: #A82222;
+    }
+    50% {
+      opacity: 1;
+      color: #A82222;
+    }
+    70% {
+      transform: translateY(-10px) scale(1.1) rotate(10deg);
+      color: #A82222;
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0) scale(1) rotate(0);
+      color: white;
+    }
+  }
+  
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2.5rem;
+    width: 90%;
+  }
+  

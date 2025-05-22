@@ -1,0 +1,40 @@
+<div class="max-w-screen-xl mx-auto text-white space-x-10 text-lg font-bold px-6 py-4">
+  <a
+    routerLink="/class"
+    routerLinkActive="after:scale-x-90"
+    [routerLinkActiveOptions]="{ exact: true }"
+    class="relative group after:content-[''] after:absolute after:left-0 after:bottom-[-7px] after:h-[3px] after:bg-white after:w-full after:scale-x-0 after:origin-left after:transition-transform after:duration-300"
+  >
+    Home
+  </a>
+  <a
+    routerLink="/task-manager"
+    routerLinkActive="after:scale-x-90"
+    [routerLinkActiveOptions]="{ exact: true }"
+    class="relative group after:content-[''] after:absolute after:left-0 after:bottom-[-7px] after:h-[3px] after:bg-white after:w-full after:scale-x-0 after:origin-left after:transition-transform after:duration-300"
+  >
+    Task Manager
+  </a>
+  <a
+    routerLink="/dashboard"
+    routerLinkActive="after:scale-x-90"
+    [routerLinkActiveOptions]="{ exact: true }"
+    class="relative group after:content-[''] after:absolute after:left-0 after:bottom-[-7px] after:h-[3px] after:bg-white after:w-full after:scale-x-0 after:origin-left after:transition-transform after:duration-300"
+  >
+    Dashboard
+  </a>
+  <a
+    routerLink="/child-profile"
+    routerLinkActive="after:scale-x-90"
+    [routerLinkActiveOptions]="{ exact: true }"
+    class="relative group after:content-[''] after:absolute after:left-0 after:bottom-[-7px] after:h-[3px] after:bg-white after:w-full after:scale-x-0 after:origin-left after:transition-transform after:duration-300"
+  >
+    Profile
+  </a>
+  <button
+    (click)="signOut()"
+    class="bg-white text-[#A82222] px-4 py-2 rounded-full hover:bg-red-50 hover:scale-110 active:scale-110 transition"
+  >
+    Sign Out
+  </button>
+</div>

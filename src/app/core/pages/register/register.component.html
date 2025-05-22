@@ -1,18 +1,15 @@
 
-<form [formGroup]="registerForm" (ngSubmit)="register()" class="max-w-screen-lg mr-10 mx-auto mb-8">
-    <h2 class="text-white text-4xl mb-7 font-bold text-center">Create Account :</h2>
+<form [formGroup]="registerForm" (ngSubmit)="register()" class="max-w-screen-lg mx-auto ">
+    <h2 class="text-white text-4xl mb-10 font-bold text-center">Create Account :</h2>
 
-    @if (apiError) {
-
-        <div class="flex p-4 mb-4 mt-2 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-            <svg class="shrink-0 inline w-4 h-4 me-3 mt-[2px]" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-              <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
-            </svg>
-            {{apiError}}
-        </div>  
-    }   
-        
-    <div class="grid grid-cols-2 gap-x-14">
+    
+     <div *ngIf="apiError" class="flex p-4 mb-4 mt-2 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+  <svg class="shrink-0 inline w-4 h-4 me-3 mt-[2px]" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+  </svg>
+  {{ apiError }}
+</div>
+    <div class="grid grid-cols-2 gap-x-20">
     <div class="relative z-0 w-full mb-5 group">
         @let nameControl = registerForm.get("name");
             <label for="name" class="block mb-2 text-sm text-white font-medium">Child Name</label>
@@ -36,23 +33,23 @@
     </div>
 
     <div class="relative z-0 w-full mb-5 group">
-        @let rePasswordControl =registerForm.get("rePassword");
-        <label for="rePassword" class="block mb-2 text-sm font-medium text-white">rePassword</label>
-        <input formControlName="rePassword" type="password" id="rePassword" class="bg-white  text-black text-sm rounded-lg focus:ring-red-600 focus:border-red-600 block w-full p-2.5" required />
-        @if (rePasswordControl?.touched && (rePasswordControl?.errors || registerForm.getError('misMatch'))) {
+        @let confirmPasswordControl =registerForm.get("confirmPassword");
+        <label for="confirmPassword" class="block mb-2 text-sm font-medium text-white">confirmPassword</label>
+        <input formControlName="confirmPassword" type="password" id="confirmPassword" class="bg-white  text-black text-sm rounded-lg focus:ring-red-600 focus:border-red-600 block w-full p-2.5" required />
+        @if (confirmPasswordControl?.touched && (confirmPasswordControl?.errors || registerForm.getError('misMatch'))) {
             <div class="flex p-4 mb-4 mt-2 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
                 <svg class="shrink-0 inline w-4 h-4 me-3 mt-[2px]" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
                 </svg>
                     <ul class="mt-1.5 list-disc list-inside">
-                        @if (rePasswordControl?.getError('required')) {
+                        @if (confirmPasswordControl?.getError('required')) {
                             <li>Confirm password</li>
                         }
-                        @else if (rePasswordControl?.getError('pattern')) {
+                        @else if (confirmPasswordControl?.getError('pattern')) {
                             <li>invalid pattern</li>
                         }
                         @else if (registerForm.getError('misMatch')) {
-                            <li>password and repassword should match</li>
+                            <li>password and confirmPassword should match</li>
                         }
                   </ul>
               </div>
@@ -60,12 +57,12 @@
     </div>
 
     <div class="relative z-0 w-full mb-5 group">
-        @let childAgeControl =registerForm.get("childAge");
-        <label for="childAge" class="block mb-2 text-sm font-medium text-white">Child Age</label>
-        <input formControlName="childAge" type="number" id="childAge" 
+        @let ageControl =registerForm.get("age");
+        <label for="age" class="block mb-2 text-sm font-medium text-white">Child Age</label>
+        <input formControlName="age" type="number" id="age" 
             class="bg-white text-black text-sm rounded-lg focus:ring-red-600 focus:border-red-600 block w-full p-2.5" 
             required min="3" max="18" pattern="^[0-9]+$" />
-            <app-error-message [nameControl]="childAgeControl"></app-error-message>
+            <app-error-message [nameControl]="ageControl"></app-error-message>
     </div>
 
     <div class="relative z-0 w-full mb-5 group">
@@ -95,8 +92,8 @@
 
     
 
-    <div class="grid place-items-center mt-4">
-        <button type="submit" class="text-[#A82222] bg-white hover:bg-second focus:ring-red-800 focus:outline-none font-medium rounded-lg text-lg w-full sm:w-auto px-7 py-2 text-center">
+    <div class="grid place-items-center mt-10">
+        <button type="submit" class="btn text-[#A82222] bg-white hover:bg-second focus:ring-red-800 focus:outline-none font-medium rounded-lg text-lg w-full sm:w-auto px-7 py-2 text-center">
             @if (isCallingApi) {
                 <svg aria-hidden="true" role="status" class="inline mr-2 w-4 h-4 me-3 text-gray-200 animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>

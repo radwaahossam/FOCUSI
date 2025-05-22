@@ -1,5 +1,9 @@
 
-<app-logo></app-logo>
-<div class="container">
+<div class="flex items-center justify-between p-4">
+    <app-logo></app-logo>
+    <app-nav *ngIf="showNavBar"></app-nav>
+  </div>
+
+<div class="container" [@routeAnimations]>
     <router-outlet></router-outlet>
 </div>

@@ -136,13 +136,22 @@ import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-parent-test',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, RouterModule],
   templateUrl: './parent-test.component.html',
-  styleUrls: ['./parent-test.component.css']
+  styleUrl: './parent-test.component.css',
+  animations: [
+    trigger('bounce', [
+      transition(':enter', [
+        style({ transform: 'translateY(-50px)', opacity: 0 }),
+        animate('800ms cubic-bezier(.68,-0.55,.27,1.55)', style({ transform: 'translateY(0)', opacity: 1 }))
+      ])
+    ])
+  ]
 })
 export class ParentTestComponent {
   form: FormGroup;
@@ -226,10 +235,16 @@ export class ParentTestComponent {
       console.log('Sending to backend:', this.answers);
   
       // هنا تبعتي الإجابات للباك اند – ممكن تستخدم HttpClient
-      // this.http.post('api/parent-answers', { answers: this.answers }).subscribe(...)
-  
-      // وبعد كده نروح لصفحة child-test
+      this.http.post('http://focusi.runasp.net/api/Tests/ParentsTest', { answers: this.answers }).subscribe({
+        next: (res)=> {
+          console.log(res);
+        },
+        error :(err)=>{
+           console.log(err)
+        }
+      })
       this.router.navigate(['/child-test']);
+
     } else {
       alert('Please answer all the questions.');
     }

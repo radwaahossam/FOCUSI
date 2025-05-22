@@ -1,0 +1,103 @@
+
+<div *ngIf="isLoading" class="flex items-center justify-center min-h-screen">
+    <div class="loader ease-linear rounded-full border-4 border-t-4 border-gray-300 h-12 w-12"></div>
+  </div>
+  
+  <div *ngIf="!isLoading && childData" class="w-full flex items-center justify-center ">
+    <div class="bg-white rounded-3xl overflow-hidden shadow-2xl w-full max-w-4xl flex flex-col md:flex-row">
+  
+      <!-- Left side -->
+      <div class="md:w-1/2 bg-[#f7ebeb] p-8 flex flex-col items-center justify-center">
+        <div class="w-36 h-36 rounded-xl overflow-hidden bg-white shadow mb-6">
+          <img 
+            *ngIf="childData.photoUrl; else noPhoto"
+            [src]="childData?.photoUrl" 
+            alt="Child Photo" 
+            class="w-full h-full object-cover"
+          />
+          <ng-template #noPhoto>
+            <div class="flex items-center justify-center w-full h-full text-gray-400">
+              No Photo
+            </div>
+          </ng-template>
+        </div>
+  
+        <h2 class="text-2xl font-bold text-gray-800 mb-2">{{ childData?.name }}</h2>
+  
+        <button 
+          class="mt-4 text-sm text-white bg-[#A82222] hover:bg-red-900 px-5 py-2 rounded-full"
+          (click)="fileInput.click()"
+        >
+          Upload Photo
+        </button>
+        <input type="file" accept="image/*" #fileInput class="hidden" (change)="onFileSelected($event)" />
+      </div>
+  
+      <!-- Right side -->
+      <div class="md:w-1/2 bg-white p-8 flex flex-col justify-center">  
+        <div class="space-y-6">
+          <div>
+            <p class="text-gray-500 text-lg">Email: </p>
+            <p class="text-gray-800">{{ childData?.email }}</p>
+          </div>
+          <div>
+            <p class="text-gray-500 text-lg">Age:</p>
+            <p class="text-gray-800">{{ childData?.age }} years</p>
+          </div>
+          <div>
+            <p class="text-gray-500 text-lg">Gender:</p>
+            <p class="text-gray-800">{{ childData?.gender }}</p>
+          </div>
+          
+          <div>
+            <p class="text-gray-500 text-lg">Account Created:</p>
+            <p class="text-gray-800">{{ childData?.createdAt | date:'longDate' }}</p>
+          </div>
+          <div>
+            <p class="text-gray-500 text-lg">Assigned Class:</p>
+            <p class="text-gray-800">{{ childData?.assignedClass }}</p>
+          </div>
+          <div>
+            <p class="text-gray-500 text-lg">Current Score:</p>
+            <p class="text-gray-800">{{ childData?.score }}%</p>
+          </div>
+        </div>
+
+        <div class="flex justify-between mt-10">
+          <button 
+          class="mt-4 text-sm text-white bg-[#A82222] hover:bg-red-900 px-5 py-2 rounded-full"
+          (click)="openEditModal()"
+        >
+          Edit Profile
+        </button>
+
+        <button 
+        class="mt-4 text-sm text-white bg-[#A82222] hover:bg-red-900 px-5 py-2 rounded-full"
+        (click)="goToFeedback()"
+        >
+          Feedback
+        </button>
+        </div>
+       
+
+        <!-- Modal لتعديل البيانات -->
+<div *ngIf="showEditModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+  <div class="bg-white p-6 rounded-xl w-full max-w-md">
+    <h3 class="text-xl font-semibold mb-4">Edit Profile</h3>
+
+    <div class="space-y-4">
+      <input [(ngModel)]="editData.name" class="w-full border p-2 rounded" placeholder="Name" />
+      <input [(ngModel)]="editData.email" class="w-full border p-2 rounded" placeholder="Email" />
+      <input [(ngModel)]="editData.age" type="number" class="w-full border p-2 rounded" placeholder="Age" />
+    </div>
+
+    <div class="flex justify-end space-x-2 mt-6">
+      <button class="bg-gray-300 px-4 py-2 rounded" (click)="closeEditModal()">Cancel</button>
+      <button class="bg-[#A82222] text-white px-4 py-2 rounded" (click)="saveProfile()">Save</button>
+    </div>
+  </div>
+</div>
+      </div>
+    </div>
+  </div>
+  

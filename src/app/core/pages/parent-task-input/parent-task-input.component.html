@@ -1,0 +1,13 @@
+
+    <div class="bg-white p-8 rounded-xl w-full">
+      <label class="block text-red-700 text-xl mb-2">Task Name</label>
+      <input [(ngModel)]="taskName" type="text" class="w-full p-2 rounded-xl border" />
+    
+      <label class="block text-red-700 text-xl mt-4 mb-2">Select Time</label>
+      <input type="time" [(ngModel)]="taskTime" class="w-full p-2 rounded-xl border" />
+    
+      <button (click)="addTask()" class="mt-4 w-12 h-12 flex items-center justify-center text-2xl rounded-full bg-green-600 text-white">
+        +
+      </button>
+    </div>
+    

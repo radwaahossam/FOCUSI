@@ -1,10 +1,9 @@
 
- /* التأثيرات العامة للفيديو */
-video {
+/* video {
   border: 2px solid #ccc;
   border-radius: 0.5rem;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); 
-}
+} */
 
 /* تعديل الزر عند تعطيله */
 button[disabled] {
@@ -12,9 +11,6 @@ button[disabled] {
   cursor: not-allowed;
 }
 
-/* Confetti placeholder (يمكنك دمج canvas-confetti في الـ HTML) */
-
-/* أنماط كروت اللعبة */
 .card {
   transition: all 0.3s ease;
   transform-style: preserve-3d;
@@ -23,35 +19,29 @@ button[disabled] {
   transform: rotateY(180deg);
 }
 
-/* التوقيت المؤقت لفتح الكروت */
 .show-all-cards-temporarily .card {
   opacity: 1;
   transform: rotateY(0deg);
 }
 
-/* كارت مقلب */
 .card.flipped {
   transform: rotateY(180deg);
 }
 
-/* عند إغلاق الكروت بعد الفتح المؤقت */
 .show-all-cards-temporarily .card.closed {
   opacity: 0;
   transform: rotateY(180deg);
 }
 
-/* تأثيرات الكروت عند التقليب */
 .card.open-temporary {
   opacity: 1;
   transform: rotateY(0deg);
 }
 
-/* التأثير عند التقليب العادي */
 .card.flipped {
   transform: rotateY(180deg);
 }
 
-/* التأثيرات عند التحريك (مثل الهز) */
 @keyframes shake {
   0%, 100% { transform: translateX(0); }
   20% { transform: translateX(-5px); }
@@ -64,7 +54,6 @@ button[disabled] {
   animation: shake 0.5s;
 }
 
-/* أنماط الـ overlay */
 .overlay {
   position: fixed;
   inset: 0;

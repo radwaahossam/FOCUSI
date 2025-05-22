@@ -1,6 +1,7 @@
 
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 interface Card {
   value: string;
@@ -11,11 +12,14 @@ interface Card {
   selector: 'app-child-test-game',
   imports: [CommonModule],
   templateUrl: './child-test-game.component.html',
-  styleUrls: ['./child-test-game.component.css']
+  styleUrl: './child-test-game.component.css'
 })
 
 
 export class ChildTestGameComponent implements OnInit {
+
+  constructor(private router: Router) {}
+
   @ViewChild('camera') cameraElement!: ElementRef<HTMLVideoElement>;
 
   deck: Card[] = [];
@@ -72,11 +76,11 @@ export class ChildTestGameComponent implements OnInit {
     this.showGameOver = false;
     this.showGame = true;
     this.showStats = true;
-    this.gameStarted = true; // بدأ اللعبة عند الضغط على start
+    this.gameStarted = true; 
     this.showAllCardsTemporarily = true;
     this.allCardsFlipped = false;
 
-    // تجهيز الديك
+
     this.deck = this.shuffle([...this.symbols, ...this.symbols].map(value => ({
       value,
       flipped: false,
@@ -187,10 +191,18 @@ export class ChildTestGameComponent implements OnInit {
     this.showMenu = false;
   }
 
-  handleExit() {
-    this.stopCameraTracking();
-    window.history.back();
+  exitMenuOnly() {
+    this.showMenu = false;
+    console.log('Menu Exit Clicked');
+
   }
+  
+  exitGame() {
+    this.stopCameraTracking();
+
+    this.router.navigate(['/video-test']);   
+  }
+
 
   startCameraTracking() {
     const video = this.cameraElement.nativeElement;
