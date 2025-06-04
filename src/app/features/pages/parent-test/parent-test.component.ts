@@ -105,7 +105,7 @@ onSubmit() {
   if (this.answers.length === this.questions.length && this.form.valid) {
     const payload = this.answers.value;
 
-    this.http.put('http://focusi.runasp.net/api/Tests/ParentsTest', payload, {
+    this.http.put('https://focusi.runasp.net/api/Tests/ParentsTest', payload, {
       responseType: 'text'
     }).subscribe({
       next: (res) => {
