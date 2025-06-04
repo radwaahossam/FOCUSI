@@ -16,7 +16,7 @@ export class AuthService {
   }
 
   loginUser(userInfo: loginUser): Observable<any> {
-    return this._httpClient.post(`http://focusi.runasp.net/api/Account/login`, userInfo);
+    return this._httpClient.post(`https://focusi.runasp.net/api/Account/login`, userInfo);
   }
 
   saveUser() {
