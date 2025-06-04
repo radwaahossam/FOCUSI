@@ -533,7 +533,7 @@ private setupTimeTracking(): void {
 
   handleExit() {
     this.stopCamera();
-    this.router.navigate(['/class']);
+    this.router.navigate(['/main/class']);
   }
 
   stopCamera() {

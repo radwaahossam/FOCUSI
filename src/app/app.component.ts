@@ -31,7 +31,7 @@ export class AppComponent {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         const url = event.urlAfterRedirects;
-        this.showNavBar = ['/child-profile', '/dashboard', '/class', '/task-manager'].includes(url);
+        this.showNavBar = ['/main/child-profile', '/main/dashboard', '/main/class', '/main/task-manager'].includes(url);
       }
     });
   }

@@ -2,6 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from '../../../core/services/auth/auth.service';
 import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-nav',
@@ -15,8 +16,9 @@ export class NavComponent implements OnInit {
 
   isLoggedIn: any 
 
-  constructor() {
-  }
+  
+constructor(private _http: HttpClient) { }
+
 
   ngOnInit(): void {
     this.checkLogginStatus()
@@ -32,13 +34,25 @@ export class NavComponent implements OnInit {
   })
   }
 
-  signOut() {
-    localStorage.removeItem("userToken")
-    this._authService.userData.next(null)
-    console.log("SIGNED OUT:", this._authService.userData.value);
+signOut() {
+  this._http.get('http://focusi.runasp.net/api/Account/logout').subscribe({
+    next: () => {
+      this.handleLogout();
+    },
+    error: (err) => {
+      console.error('Logout API failed:', err);
+      this.handleLogout();
+    }
+  });
+}
 
-    this._router.navigate(['/auth/login'])
+private handleLogout() {
+  localStorage.removeItem("userToken");
+  this._authService.userData.next(null);
+  console.log("SIGNED OUT:", this._authService.userData.value);
+  this._router.navigate(['/auth/login']);
+}
 
-  }
+
 
 }

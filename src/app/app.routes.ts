@@ -9,7 +9,7 @@ export const routes: Routes = [
         {path:"forget-password", loadComponent:()=> import('./core/pages/forget-password/forget-password.component').then(c=> c.ForgetPasswordComponent)},
     ]},
 
-    {path:"", component:MainLayoutComponent, children:[
+    {path:"main", component:MainLayoutComponent, children:[
         {path:"class", loadComponent:()=> import('./core/pages/class/class.component').then(c=> c.ClassComponent)},
         {path:"task-manager", loadComponent:()=> import('./core/pages/full-task-manager/full-task-manager.component').then(c=> c.FullTaskManagerComponent)},
         {path:"dashboard", loadComponent:()=> import('./core/pages/dash-board/dash-board.component').then(c=> c.DashBoardComponent)},
