@@ -458,7 +458,7 @@ private setupTimeTracking(): void {
 
   showQuestion(index: number) {
     const content = this.questionContentRef.nativeElement;
-    content.innerHTML = ''; // تنظيف المحتوى
+    content.innerHTML = ''; 
 
     const question = this.questions[index];
     content.innerHTML = `<h2>${question.question}</h2>`;

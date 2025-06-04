@@ -77,7 +77,7 @@ export class FeedbackComponent {
     suggestions: this.Feedback.suggestions || ''
   };
 
-  this.http.post('http://focusi.runasp.net/api/Feedback', requestBody,  { responseType: 'text' } ).subscribe({
+  this.http.post('https://focusi.runasp.net/api/Feedback', requestBody,  { responseType: 'text' } ).subscribe({
     next: (response) => {
       console.log('Feedback submitted successfully', response);
       this.showThankYouModal = true;

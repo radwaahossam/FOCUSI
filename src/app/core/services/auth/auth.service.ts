@@ -12,7 +12,7 @@ export class AuthService {
   userData: BehaviorSubject<any> = new BehaviorSubject(null)
 
   registerUser(userInfo: AuthUser): Observable<any> {
-    return this._httpClient.post(`http://focusi.runasp.net/api/Account/register`, userInfo);
+    return this._httpClient.post(`https://focusi.runasp.net/api/Account/register`, userInfo);
   }
 
   loginUser(userInfo: loginUser): Observable<any> {
@@ -68,7 +68,7 @@ export class AuthService {
   getCurrentUser(): Observable<any> {
     const token = localStorage.getItem("userToken");
     const headers = { 'Authorization': `Bearer ${token}` };
-    return this._httpClient.get(`http://focusi.runasp.net/api/Account/CurrentUser`, { headers });
+    return this._httpClient.get(`https://focusi.runasp.net/api/Account/CurrentUser`, { headers });
   }
 
   uploadProfilePicture(file: File): Observable<any> {
@@ -78,17 +78,17 @@ export class AuthService {
     const token = localStorage.getItem("userToken");
     const headers = { 'Authorization': `Bearer ${token}` };
 
-    return this._httpClient.put(`http://focusi.runasp.net/api/Account/addProfilePicture`, formData, { headers });
+    return this._httpClient.put(`https://focusi.runasp.net/api/Account/addProfilePicture`, formData, { headers });
   }
 
   updateCurrentUser(data: any): Observable<any> {
   const token = localStorage.getItem("userToken");
   const headers = { 'Authorization': `Bearer ${token}` };
-  return this._httpClient.put(`http://focusi.runasp.net/api/Account/CurrentUser`, data, { headers });
+  return this._httpClient.put(`https://focusi.runasp.net/api/Account/CurrentUser`, data, { headers });
 }
 
 logout(): Observable<any> {
-  return this._httpClient.get('http://focusi.runasp.net/api/Account/logout');
+  return this._httpClient.get('https://focusi.runasp.net/api/Account/logout');
 }
 
 

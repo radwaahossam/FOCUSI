@@ -35,7 +35,7 @@ constructor(private _http: HttpClient) { }
   }
 
 signOut() {
-  this._http.get('http://focusi.runasp.net/api/Account/logout').subscribe({
+  this._http.get('https://focusi.runasp.net/api/Account/logout').subscribe({
     next: () => {
       this.handleLogout();
     },

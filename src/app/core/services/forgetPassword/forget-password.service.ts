@@ -10,7 +10,7 @@ export class ForgetPasswordService {
   constructor(private readonly http: HttpClient) { }
 
   forgetPassword(data: any): Observable<any> {
-    return this.http.post(`http://focusi.runasp.net/api/Account/forgetpassword`, data)
+    return this.http.post(`https://focusi.runasp.net/api/Account/forgetpassword`, data)
   }
 
   // resetPassword(data: any): Observable<any> {
@@ -20,7 +20,7 @@ export class ForgetPasswordService {
 
 
   resetPassword(data: {email:string, newPassword:string, confirmPassword:string, token:string}) {
-  const url = `http://focusi.runasp.net/api/Account/resetPassword?token=${encodeURIComponent(data.token)}`;
+  const url = `https://focusi.runasp.net/api/Account/resetPassword?token=${encodeURIComponent(data.token)}`;
   const body = {
     email: data.email,
     newPassword: data.newPassword,

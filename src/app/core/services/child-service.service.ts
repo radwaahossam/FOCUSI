@@ -14,14 +14,14 @@ getChildProfile(): Observable<any> {
   if (typeof window !== 'undefined') {
   console.log('Sending token:', localStorage.getItem('userToken'));
   }
-  return this.http.get('http://focusi.runasp.net/api/Account/CurrentUser');
+  return this.http.get('https://focusi.runasp.net/api/Account/CurrentUser');
 }
 
 addProfilePicture(file: File): Observable<any> {
   const formData = new FormData();
   formData.append('Picture', file);
 
-  return this.http.put('http://focusi.runasp.net/api/Account/addProfilePicture', formData, {
+  return this.http.put('https://focusi.runasp.net/api/Account/addProfilePicture', formData, {
     responseType: 'text' as 'json' 
   });
 }
