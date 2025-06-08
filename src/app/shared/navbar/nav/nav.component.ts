@@ -15,6 +15,8 @@ export class NavComponent implements OnInit {
   _router = inject(Router)
 
   isLoggedIn: any 
+  menuOpen = false;
+
 
   
 constructor(private _http: HttpClient) { }
@@ -52,7 +54,9 @@ private handleLogout() {
   console.log("SIGNED OUT:", this._authService.userData.value);
   this._router.navigate(['/auth/login']);
 }
-
+closeMenu() {
+  this.menuOpen = false;
+}
 
 
 }

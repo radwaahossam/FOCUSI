@@ -27,7 +27,7 @@ ngOnInit(): void {
     const token = localStorage.getItem('userToken');
     if (!token) {
       console.warn('❌ No token found. Redirecting to login.');
-      this.router.navigate(['/login']);
+      this.router.navigate(['/auth/login']);
       return;
     }
     this.loadChildData();
