@@ -1,59 +1,65 @@
 
-<div class="max-w-screen-xl mx-auto px-6 py-4 bg-white text-[#A82222] text-lg font-bold flex items-center justify-between shadow-md rounded-xl">
+
+<div class="max-w-screen-xl mx-auto px-6 py-4 text-white text-lg font-bold flex items-center justify-between">
 
   <button
-    class="lg:hidden block text-[#A82222] focus:outline-none"
+    class="lg:hidden block text-white text-center focus:outline-none"
     (click)="menuOpen = !menuOpen"
   >
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
         d="M4 6h16M4 12h16M4 18h16" />
     </svg>
   </button>
 
+  <!-- Nav links -->
   <div
-    [ngClass]="{ 'hidden': !menuOpen, 'flex flex-col space-y-4 mt-4': menuOpen, 'flex-row space-x-10 mt-0': !menuOpen }"
-    class="lg:flex lg:items-center lg:space-x-10 lg:space-y-0 lg:static absolute left-0 top-16 w-full lg:w-auto bg-white px-4 lg:px-0 py-2 lg:py-0 z-50 shadow-lg lg:shadow-none rounded-b-xl"
+    [ngClass]="{
+      'hidden': !menuOpen,
+      'flex flex-col space-y-4 mt-4 bg-white text-[#A82222]': menuOpen,
+      'flex-row space-x-10 mt-0 text-white bg-transparent': !menuOpen
+    }"
+    class="lg:flex lg:items-center lg:space-x-10 lg:space-y-0 lg:static absolute left-0 top-16 w-full lg:w-auto px-6 lg:px-0 py-4 lg:py-0 z-50 transition-colors duration-300"
   >
     <a
-      routerLink="/main/class"
-      routerLinkActive="after:scale-x-100"
-      [routerLinkActiveOptions]="{ exact: true }"
-      (click)="closeMenu()"
-      class="relative group after:content-[''] after:absolute after:left-0 after:bottom-[-4px] after:h-[2px] after:bg-[#A82222] after:w-0 group-hover:after:w-full after:transition-all after:duration-300"
-    >
-      Home
-    </a>
+  routerLink="/main/class"
+  routerLinkActive="after:scale-x-100 after:w-full after:bg-[#A82222]"
+  [routerLinkActiveOptions]="{ exact: true }"
+  class="relative group after:content-[''] after:absolute after:left-0 after:bottom-[-4px] after:h-[2px] after:bg-current after:w-0 after:origin-left after:transition-all after:duration-300 group-hover:after:w-full"
+  (click)="menuOpen = false"
+>
+  Home
+</a>
     <a
       routerLink="/main/task-manager"
-      routerLinkActive="after:scale-x-100"
-      [routerLinkActiveOptions]="{ exact: true }"
-      (click)="closeMenu()"
-      class="relative group after:content-[''] after:absolute after:left-0 after:bottom-[-4px] after:h-[2px] after:bg-[#A82222] after:w-0 group-hover:after:w-full after:transition-all after:duration-300"
+     routerLinkActive="after:scale-x-100 after:w-full after:bg-[#A82222]"
+  [routerLinkActiveOptions]="{ exact: true }"
+  class="relative group after:content-[''] after:absolute after:left-0 after:bottom-[-4px] after:h-[2px] after:bg-current after:w-0 after:origin-left after:transition-all after:duration-300 group-hover:after:w-full"
+  (click)="menuOpen = false"
     >
       Task Manager
     </a>
     <a
       routerLink="/main/dashboard"
-      routerLinkActive="after:scale-x-100"
-      [routerLinkActiveOptions]="{ exact: true }"
-      (click)="closeMenu()"
-      class="relative group after:content-[''] after:absolute after:left-0 after:bottom-[-4px] after:h-[2px] after:bg-[#A82222] after:w-0 group-hover:after:w-full after:transition-all after:duration-300"
+     routerLinkActive="after:scale-x-100 after:w-full after:bg-[#A82222]"
+  [routerLinkActiveOptions]="{ exact: true }"
+  class="relative group after:content-[''] after:absolute after:left-0 after:bottom-[-4px] after:h-[2px] after:bg-current after:w-0 after:origin-left after:transition-all after:duration-300 group-hover:after:w-full"
+  (click)="menuOpen = false"
     >
       Dashboard
     </a>
     <a
       routerLink="/main/child-profile"
-      routerLinkActive="after:scale-x-100"
-      [routerLinkActiveOptions]="{ exact: true }"
-      (click)="closeMenu()"
-      class="relative group after:content-[''] after:absolute after:left-0 after:bottom-[-4px] after:h-[2px] after:bg-[#A82222] after:w-0 group-hover:after:w-full after:transition-all after:duration-300"
+    routerLinkActive="after:scale-x-100 after:w-full after:bg-[#A82222]"
+  [routerLinkActiveOptions]="{ exact: true }"
+  class="relative group after:content-[''] after:absolute after:left-0 after:bottom-[-4px] after:h-[2px] after:bg-current after:w-0 after:origin-left after:transition-all after:duration-300 group-hover:after:w-full"
+  (click)="menuOpen = false"
     >
       Profile
     </a>
     <button
-      (click)="signOut(); closeMenu()"
-      class="bg-[#A82222] text-white px-3 py-1 rounded-full hover:bg-[#C53232] transition text-sm"
+      (click)="signOut(); menuOpen = false"
+      class="bg-white text-[#A82222] px-3 py-1 rounded-full border border-[#A82222] hover:bg-red-50 hover:scale-105 active:scale-105 transition text-sm"
     >
       Sign Out
     </button>
