@@ -83,14 +83,14 @@ onFileSelected(event: any) {
 }
 
 
-  openEditModal() {
-    this.editData = { ...this.childData }; 
-    this.showEditModal = true;
-  }
+  // openEditModal() {
+  //   this.editData = { ...this.childData }; 
+  //   this.showEditModal = true;
+  // }
 
-  closeEditModal() {
-    this.showEditModal = false;
-  }
+  // closeEditModal() {
+  //   this.showEditModal = false;
+  // }
 
   goToFeedback() {
     this.router.navigate(['/feedback']);

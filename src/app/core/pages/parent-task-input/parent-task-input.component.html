@@ -1,4 +1,4 @@
-<!-- 
+
     <div class="bg-white p-8 rounded-xl w-full">
       <label class="block text-red-700 text-xl mb-2">Task Name</label>
       <input [(ngModel)]="taskName" type="text" class="w-full p-2 rounded-xl border" />
@@ -10,11 +10,11 @@
         +
       </button>
     </div>
-     -->
+    
 
 
 
-<div *ngFor="let task of tasks" class="bg-white p-4 m-2 rounded-xl flex justify-between items-center">
+<!-- <div *ngFor="let task of tasks" class="bg-white p-4 m-2 rounded-xl flex justify-between items-center">
   <div>
     <div class="text-red-700 font-bold text-xl">{{ task.name }}</div>
     <div class="text-gray-500 italic">{{ task.date }}</div>
@@ -23,7 +23,7 @@
     <button (click)="editTask(task)" class="text-blue-600">✏️</button>
     <button (click)="deleteTask(task)" class="text-red-600">🗑️</button>
     <label class="switch">
-      <!-- <input type="checkbox" [checked]="task.isActive" (change)="toggleActive(task)" /> -->
+      <input type="checkbox" [checked]="task.isActive" (change)="toggleActive(task)" />
       <span class="slider round"></span>
     </label>
   </div>
@@ -34,7 +34,7 @@
   <input [(ngModel)]="taskName" type="text" class="w-full p-2 rounded-xl border" />
 
   <label class="block text-red-700 text-xl mt-4 mb-2">Select Time</label>
-  <!-- <input type="time" [(ngModel)]="taskTime" class="w-full p-2 rounded-xl border" /> -->
+  <input type="time" [(ngModel)]="taskTime" class="w-full p-2 rounded-xl border" />
   <input [ngxTimepicker]="picker" readonly [(ngModel)]="taskTime" placeholder="Select time">
   <ngx-material-timepicker #picker></ngx-material-timepicker>
 
@@ -42,4 +42,4 @@
   <button (click)="addTask()" class="mt-4 w-12 h-12 flex items-center justify-center text-2xl rounded-full bg-green-600 text-white">
     +
   </button>
-</div>
+</div> -->

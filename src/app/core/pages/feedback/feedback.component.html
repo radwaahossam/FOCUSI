@@ -1,12 +1,12 @@
 
-<div class="text-white min-h-screen flex flex-col justify-center items-center p-6 font-[Exo 2 sans-serif]">
-    <h2 class="text-3xl font-bold mb-10 text-center">We'd love your feedback to help us improve the platform</h2>
+<div class="text-white min-h-screen flex flex-col justify-center items-center font-[Exo 2 sans-serif]">
+    <h2 class="text-4xl font-bold mb-10 text-center">We'd love your feedback to help us improve the platform</h2>
   
     <form (ngSubmit)="submitFeedback()" class="w-full max-w-2xl space-y-6">
   
       <!-- Q1 -->
       <div>
-        <label class="block mb-2 font-bold">1. To what extent did the program help you understand your child's behavior?</label>
+        <label class="block mb-2 font-bold text-lg">1. To what extent did the program help you understand your child's behavior?</label>
         <div class="flex gap-2 text-yellow-400 text-3xl">
           <ng-container *ngFor="let star of [1,2,3,4,5]; let i = index">
             <span (click)="setRating('understanding', i + 1)"
@@ -18,7 +18,7 @@
   
       <!-- Q2 -->
       <div>
-        <label class="block mb-2 font-bold">2. Were the activities suitable for your child's age?</label>
+        <label class="block mb-2 font-bold text-lg">2. Were the activities suitable for your child's age?</label>
         <div class="flex gap-2 text-yellow-400 text-3xl">
           <ng-container *ngFor="let star of [1,2,3,4,5]; let i = index">
             <span (click)="setRating('suitability', i + 1)"
@@ -30,7 +30,7 @@
   
       <!-- Q3 -->
       <div>
-        <label class="block mb-2 font-bold">3. Was the content clear and easy to understand?</label>
+        <label class="block mb-2 font-bold text-lg">3. Was the content clear and easy to understand?</label>
         <div class="flex gap-2 text-yellow-400 text-3xl">
           <ng-container *ngFor="let star of [1,2,3,4,5]; let i = index">
             <span (click)="setRating('clarity', i + 1)"
@@ -42,7 +42,7 @@
   
     <!-- Q4 -->
   <div>
-    <label class="block mb-2 font-bold">4. Did you notice any improvement in your child’s attention or behavior?</label>
+    <label class="block mb-2 font-bold text-lg">4. Did you notice any improvement in your child’s attention or behavior?</label>
     <div class="radio-group flex gap-6 text-white">
       <label class="flex items-center space-x-2 cursor-pointer ">
         <input type="radio" name="improvement" [(ngModel)]="Feedback.improvement" value="Yes" class="accent-red-600 w-4 h-4">
@@ -62,7 +62,7 @@
 
        <!-- Q5 -->
   <div>
-    <label class="block mb-2 font-bold">5. Would you like to continue using the program?</label>
+    <label class="block mb-2 font-bold text-lg">5. Would you like to continue using the program?</label>
     <div class="radio-group flex gap-6 text-white">
       <label class="flex items-center space-x-2 cursor-pointer">
         <input type="radio" name="continue" [(ngModel)]="Feedback.continue" value="Yes" class="accent-red-600 w-4 h-4">
@@ -81,7 +81,7 @@
 
     <!-- Q6 -->
     <div>
-        <label class="block mb-2 font-bold">6. Would you recommend this program to other parents?</label>
+        <label class="block mb-2 font-bold text-lg">6. Would you recommend this program to other parents?</label>
         <div class="radio-group flex gap-6 text-white">
           <label class="flex items-center space-x-2 cursor-pointer">
             <input type="radio" name="recommend" [(ngModel)]="Feedback.recommend" value="Yes" class="accent-red-600 w-4 h-4">
@@ -96,7 +96,7 @@
 
       <!-- Q7 -->
       <div>
-        <label class="block mb-2 font-bold">7. Which part of the program did you find most helpful?</label>
+        <label class="block mb-2 font-bold text-lg">7. Which part of the program did you find most helpful?</label>
         <select [(ngModel)]="Feedback.favoritePart" name="favoritePart" class="text-black w-full p-2 rounded">
           <option value="">-- Select --</option>
           <option value="Games">Games</option>
@@ -109,7 +109,7 @@
   
       <!-- Q8 -->
       <div>
-        <label class="block mb-2 font-bold">8. Do you have any suggestions to improve the program?</label>
+        <label class="block mb-2 font-bold text-lg">8. Do you have any suggestions to improve the program?</label>
         <textarea [(ngModel)]="Feedback.suggestions" name="suggestions" rows="3" class="w-full p-2 rounded text-black"></textarea>
       </div>
     

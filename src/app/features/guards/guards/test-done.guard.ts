@@ -89,33 +89,33 @@
 
 
 
-import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
-import { CanActivate, Router } from '@angular/router';
-import { isPlatformBrowser } from '@angular/common';
-import { TestStateService } from '../../services/features/services/test-state.service';
+// import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
+// import { CanActivate, Router } from '@angular/router';
+// import { isPlatformBrowser } from '@angular/common';
+// import { TestStateService } from '../../services/features/services/test-state.service';
 
-@Injectable({
-  providedIn: 'root'
-})
-export class TestDoneGuard implements CanActivate {
-  private isBrowser: boolean;
+// @Injectable({
+//   providedIn: 'root'
+// })
+// export class TestDoneGuard implements CanActivate {
+//   private isBrowser: boolean;
 
-  constructor(
-    private testStateService: TestStateService,
-    private router: Router,
-    @Inject(PLATFORM_ID) private platformId: Object
-  ) {
-    this.isBrowser = isPlatformBrowser(this.platformId);
-  }
+//   constructor(
+//     private testStateService: TestStateService,
+//     private router: Router,
+//     @Inject(PLATFORM_ID) private platformId: Object
+//   ) {
+//     this.isBrowser = isPlatformBrowser(this.platformId);
+//   }
 
-  canActivate(): boolean {
-    if (!this.isBrowser) return false;
+//   canActivate(): boolean {
+//     if (!this.isBrowser) return false;
 
-    if (this.testStateService.isVideoTestDone) {
-      return true;
-    } else {
-      this.router.navigate(['/video-test']);
-      return false;
-    }
-  }
-}
+//     if (this.testStateService.isVideoTestDone) {
+//       return true;
+//     } else {
+//       this.router.navigate(['/video-test']);
+//       return false;
+//     }
+//   }
+// }

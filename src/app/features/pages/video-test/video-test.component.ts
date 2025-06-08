@@ -9,31 +9,31 @@ import { Router } from '@angular/router';
   styleUrl: './video-test.component.css'
 })
 
-export class VideoTestComponent implements OnInit, OnDestroy {
- isBrowser: boolean;
+export class VideoTestComponent {
+//  isBrowser: boolean;
 
-  constructor(
-    public router: Router,
-    private zone: NgZone,
-    @Inject(PLATFORM_ID) private platformId: Object
-  ) {
-    this.isBrowser = isPlatformBrowser(this.platformId);
-  }
+//   constructor(
+//     public router: Router,
+//     private zone: NgZone,
+//     @Inject(PLATFORM_ID) private platformId: Object
+//   ) {
+//     this.isBrowser = isPlatformBrowser(this.platformId);
+//   }
 
-  ngOnInit(): void {
-    if (this.isBrowser) {
-      (window as any).angularComponentRef = {
-        zone: this.zone,
-        router: this.router
-      };
-    }
-  }
+//   ngOnInit(): void {
+//     if (this.isBrowser) {
+//       (window as any).angularComponentRef = {
+//         zone: this.zone,
+//         router: this.router
+//       };
+//     }
+//   }
 
-  ngOnDestroy(): void {
-    if (this.isBrowser) {
-      (window as any).angularComponentRef = null;
-    }
-  }
+//   ngOnDestroy(): void {
+//     if (this.isBrowser) {
+//       (window as any).angularComponentRef = null;
+//     }
+//   }
 }
 // export class VideoTestComponent {
   

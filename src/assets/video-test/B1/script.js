@@ -246,22 +246,6 @@ exitBtn?.addEventListener("click", handleExit);
 //     sendResultsToBackend(correctAnswers);
 // }
 
-// function handleExit() {
-//     if (!video.ended || currentQuestionIndex < questions.length) {
-//         alert("Please complete the video and answers first before exiting.");
-//         return;
-//     }
-
-//     stopCamera();
-//     // sendResultsToBackend(correctAnswers);
-//     localStorage.setItem('isVideoTestDone', 'true');
-//     // window.location.href = "/main/class"; 
-//   window.angularComponentRef.zone.run(() => {
-//     window.angularComponentRef.router.navigate(['/main/class']);
-// });
-
-// }
-
 function handleExit() {
     if (!video.ended || currentQuestionIndex < questions.length) {
         alert("Please complete the video and answers first before exiting.");
@@ -269,18 +253,34 @@ function handleExit() {
     }
 
     stopCamera();
-    sendResultsToBackend(correctAnswers);
+    // sendResultsToBackend(correctAnswers);
     localStorage.setItem('isVideoTestDone', 'true');
-
-    // ✅ تحقق إن Angular جاهز
-   if (window.angularComponentRef && window.angularComponentRef.zone && window.angularComponentRef.router) {
+    // window.location.href = "/main/class"; 
   window.angularComponentRef.zone.run(() => {
     window.angularComponentRef.router.navigate(['/main/class']);
-  });
-} else {
-  window.location.href = "/main/class";
+});
+
 }
-}
+
+// function handleExit() {
+//     if (!video.ended || currentQuestionIndex < questions.length) {
+//         alert("Please complete the video and answers first before exiting.");
+//         return;
+//     }
+
+//     stopCamera();
+//     sendResultsToBackend(correctAnswers);
+//     localStorage.setItem('isVideoTestDone', 'true');
+
+//     // ✅ تحقق إن Angular جاهز
+//    if (window.angularComponentRef && window.angularComponentRef.zone && window.angularComponentRef.router) {
+//   window.angularComponentRef.zone.run(() => {
+//     window.angularComponentRef.router.navigate(['/main/class']);
+//   });
+// } else {
+//   window.location.href = "/main/class";
+// }
+// }
 
 
 

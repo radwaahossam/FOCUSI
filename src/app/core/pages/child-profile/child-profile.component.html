@@ -42,10 +42,6 @@
             <p class="text-gray-500 text-lg">Age:</p>
             <p class="text-gray-800">{{ childData?.age }} years</p>
           </div>
-          <!-- <div>
-            <p class="text-gray-500 text-lg">Gender:</p>
-            <p class="text-gray-800">{{ childData?.gender }}</p>
-          </div> -->
           
           <div>
             <p class="text-gray-500 text-lg">Account Created:</p>
@@ -61,13 +57,13 @@
           </div>
         </div>
 
-        <div class="flex justify-between mt-10">
-          <button 
+        <div class="flex justify-end  mt-10">
+          <!-- <button 
           class="mt-4 text-sm text-white bg-[#A82222] hover:bg-red-900 px-5 py-2 rounded-full"
           (click)="openEditModal()"
         >
           Edit Profile
-        </button>
+        </button> -->
 
         <button 
         class="mt-4 text-sm text-white bg-[#A82222] hover:bg-red-900 px-5 py-2 rounded-full"
@@ -77,7 +73,7 @@
         </button>
         </div>
        
-
+<!-- 
 <div *ngIf="showEditModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
   <div class="bg-white p-6 rounded-xl w-full max-w-md">
     <h3 class="text-xl font-semibold mb-4">Edit Profile</h3>
@@ -90,10 +86,10 @@
 
     <div class="flex justify-end space-x-2 mt-6">
       <button class="bg-gray-300 px-4 py-2 rounded" (click)="closeEditModal()">Cancel</button>
-      <!-- <button class="bg-[#A82222] text-white px-4 py-2 rounded" (click)="saveProfile()">Save</button> -->
+      <button class="bg-[#A82222] text-white px-4 py-2 rounded" (click)="saveProfile()">Save</button>
     </div>
   </div>
-</div>
+</div> -->
       </div>
     </div>
   </div>
