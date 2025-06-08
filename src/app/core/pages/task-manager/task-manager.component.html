@@ -1,4 +1,4 @@
-
+<!-- 
   <div *ngFor="let task of tasks" class="bg-white p-4 m-2 rounded-xl flex justify-between items-center">
     <div>
       <div class="text-red-700 font-bold text-xl">{{ task.name }}</div>
@@ -13,4 +13,20 @@
       </label>
     </div>
   </div>
-  
+   -->
+
+
+   <div *ngFor="let task of tasks" class="bg-white p-4 m-2 rounded-xl flex justify-between items-center">
+  <div>
+    <div class="text-red-700 font-bold text-xl">{{ task.name }}</div>
+    <div class="text-gray-500 italic">{{ task.date }}</div>
+  </div>
+  <div class="flex gap-2 items-center">
+    <button (click)="editTask(task)" class="text-blue-600">✏️</button>
+    <button (click)="deleteTask(task)" class="text-red-600">🗑️</button>
+    <label class="switch">
+      <!-- <input type="checkbox" [checked]="task.isActive" (change)="toggleActive(task)" /> -->
+      <span class="slider round"></span>
+    </label>
+  </div>
+</div>

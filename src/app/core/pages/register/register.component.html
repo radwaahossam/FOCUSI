@@ -1,6 +1,6 @@
 
 <form [formGroup]="registerForm" (ngSubmit)="register()" class="max-w-screen-lg mx-auto ">
-    <h2 class="text-white text-4xl mb-10 font-bold text-center">Create Account :</h2>
+    <h2 class="text-white text-4xl mb-14 font-bold text-center">Create Account :</h2>
 
     
      <div *ngIf="apiError" class="flex p-4 mb-4 mt-2 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
@@ -9,7 +9,7 @@
   </svg>
   {{ apiError }}
 </div>
-    <div class="grid grid-cols-2 gap-x-20">
+    <div class="grid grid-cols-2 gap-x-32">
     <div class="relative z-0 w-full mb-5 group">
         @let nameControl = registerForm.get("name");
             <label for="name" class="block mb-2 text-sm text-white font-medium">Child Name</label>

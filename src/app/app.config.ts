@@ -7,6 +7,9 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { API_BASE_URL } from './token/api-token';
 import { tokenInterceptor } from './core/interceptors/services/auth/token.interceptor';
+import { TestStateService } from './features/services/features/services/test-state.service';
+import { APP_INITIALIZER } from '@angular/core';
+
 
 
 export const appConfig: ApplicationConfig = {
@@ -25,7 +28,7 @@ export const appConfig: ApplicationConfig = {
   {
     provide: API_BASE_URL,
     useValue: `http://focusi.runasp.net/api/v1`
-  }
+  },
 ]
 };
 

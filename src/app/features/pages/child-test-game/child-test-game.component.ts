@@ -199,8 +199,10 @@ export class ChildTestGameComponent implements OnInit {
   
   exitGame() {
     this.stopCameraTracking();
+    localStorage.setItem('isChildTestDone', 'true');
+    this.router.navigate(['/video-test']);
 
-    this.router.navigate(['/video-test']);   
+    // this.router.navigate(['/video-test']);   
   }
 
 
