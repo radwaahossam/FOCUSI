@@ -1,0 +1,13 @@
+<div class="px-4">
+  <h2 class="text-4xl font-extrabold mb-14 text-center text-white">Advice to parents for handling a distracted child</h2>
+
+  <div *ngIf="isLoading" class="text-center text-[#A82222]">Loading...</div>
+    <!-- <div *ngIf="error" class="text-center text-white">{{ error }}</div> -->
+
+  <div *ngIf="!isLoading">
+    <div *ngFor="let advice of adviceList; index as i" class="bg-white text-[#A82222] rounded-2xl shadow p-6 mb-4">
+      <div class="font-bold text-xl mb-2"> {{ i + 1 }} .</div>
+      <div class="text-[#A82222] text-xl leading-relaxed">{{ advice }}</div>
+    </div>
+  </div>
+</div>

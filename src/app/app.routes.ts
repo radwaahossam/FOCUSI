@@ -31,10 +31,11 @@ export const routes: Routes = [
     {path:"child-test", loadComponent:()=> import('./features/pages/child-test-game/child-test-game.component').then(c=> c.ChildTestGameComponent)},
     {path:"video-test", loadComponent:()=> import('./features/pages/video-test/video-test.component').then(c=> c.VideoTestComponent)},
     {path:"feedback", loadComponent:()=> import('./core/pages/feedback/feedback.component').then(c=> c.FeedbackComponent)},
+    {path:"advices", loadComponent:()=> import('./core/pages/advices/advices.component').then(c=> c.AdvicesComponent)},
 
     // {path:"", pathMatch: 'full', loadComponent:()=> import('./core/pages/login/login.component').then(c=> c.LoginComponent)},
 
-    // {path:"**", loadComponent:()=> import('./core/pages/not-found/not-found.component').then(c=> c.NotFoundComponent )},
+    {path:"**", loadComponent:()=> import('./core/pages/not-found/not-found.component').then(c=> c.NotFoundComponent )},
     { path: '', redirectTo: 'auth/login', pathMatch: 'full' },
 
 

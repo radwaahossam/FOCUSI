@@ -1,0 +1,11 @@
+
+.not-found-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.not-found-container img {
+  max-width: 100%;
+  object-fit: contain;
+}

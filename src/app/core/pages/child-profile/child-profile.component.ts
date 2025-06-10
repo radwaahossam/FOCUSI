@@ -17,8 +17,14 @@ export class ChildProfileComponent implements OnInit {
   childData: any = null;
   isLoading = true;
 
-  showEditModal = false;
-  editData: any = {}; 
+showEditModal = false;
+editData: any = {
+  Name: '',
+  Age: ''
+};
+
+
+editPictureFile: File | null = null;
 
 constructor(private ChildServiceService: ChildServiceService, private router: Router ) {}
 
@@ -74,28 +80,87 @@ sanitizeFileName(name: string): string {
   return `profile_${timestamp}.${extension}`;
 }
 
-
 onFileSelected(event: any) {
   const file: File = event.target.files[0];
   if (file) {
     this.uploadPhoto(file);
   }
 }
-
-
-  // openEditModal() {
-  //   this.editData = { ...this.childData }; 
-  //   this.showEditModal = true;
-  // }
-
-  // closeEditModal() {
-  //   this.showEditModal = false;
-  // }
-
   goToFeedback() {
     this.router.navigate(['/feedback']);
   }
+
+openEditModal() {
+  this.editData = {
+    Name: this.childData?.name || '',
+    Age: this.childData?.age || ''
+  }; 
+  this.editPictureFile = null;
+  this.showEditModal = true;
 }
 
+closeEditModal() {
+  this.showEditModal = false;
+}
+
+// onEditFileSelected(event: any) {
+//   const file: File = event.target.files[0];
+//   if (file) {
+//     this.editPictureFile = file;
+//   }
+// }
 
 
+// onSubmitEdit() {
+//   if ((!this.editData.Name || this.editData.Name.trim() === '') && (this.editData.Age == null || this.editData.Age === '')) {
+//   alert('Please fill at least one field to update.');
+//   return;
+// }
+//   this.ChildServiceService.updateChildProfile(
+//     this.editData.name,
+//     +this.editData.age,
+//     this.editPictureFile || undefined
+//   ).subscribe({
+//     next: () => {
+//       alert('Profile updated successfully');
+//       this.loadChildData();
+//       this.closeEditModal();
+//     },
+//     error: (err) => {
+//       console.error('Error updating profile', err);
+//       alert('Error updating profile');
+//     }
+//   });
+// }
+
+
+onSubmitEdit() {
+  if (!this.editData.Name || this.editData.Name.trim() === '') {
+    alert('Please enter a valid name');
+    return;
+  }
+
+  const parsedAge = Number(this.editData.Age);
+  if (!Number.isInteger(parsedAge) || parsedAge < 0) {
+    alert('Please enter a valid age (integer >= 0)');
+    return;
+  }
+
+  this.ChildServiceService.updateChildProfile(
+    this.editData.Name.trim(),
+    Math.floor(parsedAge),  
+    // this.editPictureFile 
+  ).subscribe({
+    next: () => {
+      alert('✅ Profile updated successfully');
+      this.loadChildData();
+      this.closeEditModal();
+    },
+    error: (err) => {
+      console.error('❌ Error updating profile', err);
+      alert('❌ Failed to update profile. Please try again.');
+    }
+  });
+}
+
+}

@@ -17,8 +17,6 @@ export class NavComponent implements OnInit {
   isLoggedIn: any 
   menuOpen = false;
 
-
-  
 constructor(private _http: HttpClient) { }
 
 

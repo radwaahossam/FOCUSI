@@ -6,7 +6,6 @@
 <div *ngIf="!isLoading && childData" class="w-full flex items-center justify-center px-4 py-6">
   <div class="bg-white rounded-3xl overflow-hidden shadow-2xl w-full max-w-4xl flex flex-col md:flex-row">
     
-    <!-- الصورة -->
     <div class="md:w-1/2 bg-[#f7ebeb] p-8 flex flex-col items-center justify-center">
       <div class="w-36 h-36 rounded-xl overflow-hidden bg-white shadow mb-6">
         <img
@@ -58,19 +57,13 @@
         </div>
       </div>
 
-      <!-- الازرار -->
-      <div class="flex justify-end flex-wrap gap-2 mt-10">
-        <!-- زر Edit Profile (كومنت زي ما انتي عاملاه) -->
-        <!--
+      <div class="flex justify-between flex-wrap gap-2 mt-10">        
         <button
           class="mt-4 text-sm text-white bg-[#A82222] hover:bg-red-900 px-5 py-2 rounded-full w-full sm:w-auto"
           (click)="openEditModal()"
         >
           Edit Profile
         </button>
-        -->
-
-        <!-- زر Feedback -->
         <button
           class="mt-4 text-sm text-white bg-[#A82222] hover:bg-red-900 px-5 py-2 rounded-full w-full sm:w-auto"
           (click)="goToFeedback()"
@@ -82,22 +75,24 @@
   </div>
 </div>
 
-<!-- مودال Edit Profile (برضو كومنت زي ما كتبتيه) -->
-<!--
 <div *ngIf="showEditModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
   <div class="bg-white p-6 rounded-xl w-full max-w-md">
     <h3 class="text-xl font-semibold mb-4">Edit Profile</h3>
 
     <div class="space-y-4">
-      <input [(ngModel)]="editData.name" class="w-full border p-2 rounded" placeholder="Name" />
-      <input [(ngModel)]="editData.email" class="w-full border p-2 rounded" placeholder="Email" />
-      <input [(ngModel)]="editData.age" type="number" class="w-full border p-2 rounded" placeholder="Age" />
+      <label>Name:</label>
+      <input [(ngModel)]="editData.Name" class="w-full border p-2 rounded" placeholder="Name" />
+      <label>Age:</label>
+       <input type="number" [(ngModel)]="editData.Age" class="w-full border p-2 rounded" placeholder="Age" min="4" max="12" />
+
+      <!-- <label>Picture:</label>
+    <input type="file" (change)="onEditFileSelected($event)"> -->
     </div>
 
     <div class="flex justify-end space-x-2 mt-6">
       <button class="bg-gray-300 px-4 py-2 rounded" (click)="closeEditModal()">Cancel</button>
-      <button class="bg-[#A82222] text-white px-4 py-2 rounded" (click)="saveProfile()">Save</button>
+      <button class="bg-[#A82222] text-white px-4 py-2 rounded" (click)="onSubmitEdit()">Save</button>
     </div>
   </div>
 </div>
--->
+
