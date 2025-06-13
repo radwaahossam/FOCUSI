@@ -1,6 +1,14 @@
-import { isPlatformBrowser } from '@angular/common';
-import { Component, Inject, NgZone, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+
+declare global {
+  interface Window {
+    angularComponentRef: {
+      zone: NgZone;
+      router: Router;
+    };
+  }
+}
 
 @Component({
   selector: 'app-video-test',
@@ -9,48 +17,16 @@ import { Router } from '@angular/router';
   styleUrl: './video-test.component.css'
 })
 
-export class VideoTestComponent {
-//  isBrowser: boolean;
+export class VideoTestComponent implements OnInit {
+  constructor(private router: Router, private ngZone: NgZone) {}
 
-//   constructor(
-//     public router: Router,
-//     private zone: NgZone,
-//     @Inject(PLATFORM_ID) private platformId: Object
-//   ) {
-//     this.isBrowser = isPlatformBrowser(this.platformId);
-//   }
-
-//   ngOnInit(): void {
-//     if (this.isBrowser) {
-//       (window as any).angularComponentRef = {
-//         zone: this.zone,
-//         router: this.router
-//       };
-//     }
-//   }
-
-//   ngOnDestroy(): void {
-//     if (this.isBrowser) {
-//       (window as any).angularComponentRef = null;
-//     }
-//   }
+ngOnInit(): void {
+  window.angularComponentRef = {
+    zone: this.ngZone,
+    router: this.router
+  };
 }
-// export class VideoTestComponent {
-  
-// constructor(
-//   private router: Router,
-//   private ngZone: NgZone,
-//   @Inject(PLATFORM_ID) private platformId: Object
-// ) {}
-
-// ngOnInit() {
-//   if (isPlatformBrowser(this.platformId)) {
-//     (window as any).angularComponentRef = {
-//       zone: this.ngZone,
-//       router: this.router
-//     };
-//   }
-// }
+}
 
 
 

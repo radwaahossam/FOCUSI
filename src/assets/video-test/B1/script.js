@@ -241,26 +241,38 @@ tryAgainBtn.addEventListener("click", () => {
 
 exitBtn?.addEventListener("click", handleExit);
 
-// function handleExit() {
-//     stopCamera();
-//     sendResultsToBackend(correctAnswers);
-// }
-
 function handleExit() {
-    if (!video.ended || currentQuestionIndex < questions.length) {
-        alert("Please complete the video and answers first before exiting.");
-        return;
-    }
+  if (!video.ended || currentQuestionIndex < questions.length) {
+    alert("Please complete the video and answers first before exiting.");
+    return;
+  }
 
-    stopCamera();
-    // sendResultsToBackend(correctAnswers);
-    localStorage.setItem('isVideoTestDone', 'true');
-    // window.location.href = "/main/class"; 
-  window.angularComponentRef.zone.run(() => {
-    window.angularComponentRef.router.navigate(['/main/class']);
-});
+  stopCamera();
+  localStorage.setItem('isVideoTestDone', 'true');
 
+  if (window.angularComponentRef && window.angularComponentRef.zone && window.angularComponentRef.router) {
+    window.angularComponentRef.zone.run(() => {
+      window.angularComponentRef.router.navigate(['/main/class']);
+    });
+  } else {
+    window.location.href = "/main/class";
+  }
 }
+
+
+// function handleExit() {
+//     if (!video.ended || currentQuestionIndex < questions.length) {
+//         alert("Please complete the video and answers first before exiting.");
+//         return;
+//     }
+//     stopCamera();
+//     // sendResultsToBackend(correctAnswers);
+//     localStorage.setItem('isVideoTestDone', 'true');
+//     window.location.href = "/main/class"; 
+//   window.angularComponentRef.zone.run(() => {
+//     window.angularComponentRef.router.navigate(['/main/class']);
+// });
+// }
 
 // function handleExit() {
 //     if (!video.ended || currentQuestionIndex < questions.length) {

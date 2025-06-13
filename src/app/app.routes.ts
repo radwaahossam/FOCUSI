@@ -32,6 +32,7 @@ export const routes: Routes = [
     {path:"video-test", loadComponent:()=> import('./features/pages/video-test/video-test.component').then(c=> c.VideoTestComponent)},
     {path:"feedback", loadComponent:()=> import('./core/pages/feedback/feedback.component').then(c=> c.FeedbackComponent)},
     {path:"advices", loadComponent:()=> import('./core/pages/advices/advices.component').then(c=> c.AdvicesComponent)},
+    {path:"stories", loadComponent:()=> import('./core/pages/stories/stories.component').then(c=> c.StoriesComponent)},
 
     // {path:"", pathMatch: 'full', loadComponent:()=> import('./core/pages/login/login.component').then(c=> c.LoginComponent)},
 
