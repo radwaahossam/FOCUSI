@@ -17,7 +17,9 @@
                     <li>invalid email</li>
                 }
                 @else if (nameControl?.getError('pattern')) {
-                    <li>not valid pattern</li>
+                    <li>invalid pattern.<br>
+                    It must be at least 8 characters long and include at least one uppercase letter<br>
+                    one number, and one special character</li>
                 }
                 @else if (nameControl?.getError('min')) {
                     <li>age must be at least 3 years</li>
