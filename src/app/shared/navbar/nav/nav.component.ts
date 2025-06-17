@@ -55,6 +55,4 @@ private handleLogout() {
 closeMenu() {
   this.menuOpen = false;
 }
-
-
 }

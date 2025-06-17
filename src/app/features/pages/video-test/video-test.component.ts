@@ -1,32 +1,47 @@
-import { Component, NgZone, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-
-declare global {
-  interface Window {
-    angularComponentRef: {
-      zone: NgZone;
-      router: Router;
-    };
-  }
-}
+import { CommonModule } from '@angular/common';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 
 @Component({
-  selector: 'app-video-test',
-  imports: [],
+  selector: 'app-interactive-video',
+  imports: [ CommonModule ],
   templateUrl: './video-test.component.html',
-  styleUrl: './video-test.component.css'
+  styleUrls: ['./video-test.component.css'],
 })
+export class VideoTestComponent {
+  @ViewChild('videoPlayer') videoPlayer!: ElementRef<HTMLVideoElement>;
+  @ViewChild('cameraFeed') cameraFeed!: ElementRef<HTMLVideoElement>;
 
-export class VideoTestComponent implements OnInit {
-  constructor(private router: Router, private ngZone: NgZone) {}
+  showIntroOverlay = true;
+  videoStarted = false;
+  cameraEnabled = false;
 
-ngOnInit(): void {
-  window.angularComponentRef = {
-    zone: this.ngZone,
-    router: this.router
-  };
+  startWithoutCamera() {
+    this.showIntroOverlay = false;
+    this.videoStarted = true;
+    this.playVideo();
+  }
+
+  startWithCamera() {
+    this.showIntroOverlay = false;
+    this.videoStarted = true;
+    this.cameraEnabled = true;
+    this.playVideo();
+    this.startCamera();
+  }
+
+  playVideo() {
+    setTimeout(() => {
+      this.videoPlayer.nativeElement.play();
+    }, 100); // slight delay to ensure DOM is ready
+  }
+
+  startCamera() {
+    navigator.mediaDevices.getUserMedia({ video: true })
+      .then(stream => {
+        this.cameraFeed.nativeElement.srcObject = stream;
+      })
+      .catch(err => {
+        console.error('Camera access denied:', err);
+      });
+  }
 }
-}
-
-
-

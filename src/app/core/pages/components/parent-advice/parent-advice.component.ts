@@ -13,7 +13,6 @@ export class ParentAdviceComponent implements OnInit {
 
   adviceList: string[] = [];
   isLoading = true;
-  // error = '';
 
   constructor(private adviceService: AdviceService) {}
 
@@ -22,12 +21,10 @@ export class ParentAdviceComponent implements OnInit {
   next: (advice) => {
     this.adviceList = advice;
     this.isLoading = false;
-    // this.error = ''; 
   },
   error: (err) => {
     console.error('Error loading advice:', err);
     this.isLoading = false;
-    // this.error = 'لم يتم العثور على نصائح. تأكد من تصنيف الطفل أولاً.';
   }
 });
   }

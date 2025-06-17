@@ -1,0 +1,71 @@
+<div *ngFor="let report of reports; let i = index" class="max-w-4xl mx-auto bg-white shadow-xl rounded-2xl p-6 mb-8 transition-all duration-300">
+  <div class="flex items-center justify-between border-b pb-4 mb-4">
+    <div>
+      <h2 class="text-2xl font-bold text-[#A82222]">Monthly Report – {{ report.month }}</h2>
+    </div>
+    <button
+      (click)="toggleExpand(i)"
+      class="text-[#A82222] hover:text-[#812929] transition"
+    >
+      <span *ngIf="expandedIndex !== i">▼ Show More</span>
+      <span *ngIf="expandedIndex === i">▲ Show Less</span>
+    </button>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div>
+      <h3 class="font-semibold text-black">Total Time</h3>
+      <p>{{ report.totalTime }}</p>
+    </div>
+    <div>
+      <h3 class="font-semibold text-black">Focus Score</h3>
+      <p>{{ report.focusScore }}</p>
+    </div>
+    <div>
+      <h3 class="font-semibold text-black">Time Change</h3>
+      <p>{{ report.timeChange }}</p>
+    </div>
+  </div>
+
+  <div
+    *ngIf="expandedIndex === i"
+    class="mt-6 space-y-5"
+  >
+    <div>
+      <h3 class="font-semibold text-black">Activity Breakdown</h3>
+      <ul class="list-disc list-inside text-gray-800">
+        <li>Stories: {{ report.activityBreakdown.stories }} mins</li>
+        <li>Games: {{ report.activityBreakdown.games }} mins</li>
+        <li>Videos: {{ report.activityBreakdown.videos }} mins</li>
+        <li>Advice: {{ report.activityBreakdown.advice }} mins</li>
+      </ul>
+    </div>
+
+    <div>
+      <h3 class="font-semibold text-black">Highlights</h3>
+      <p>Most Interactive: {{ report.mostInteractive }}</p>
+      <p>Favorite Topic: {{ report.favoriteTopic }}</p>
+      <p>Least Engaged: {{ report.leastEngaged }}</p>
+    </div>
+
+    <div>
+      <h3 class="font-semibold text-black">Tasks</h3>
+      <p>Completed: {{ report.tasks.completed }} / {{ report.tasks.total }}</p>
+      <p>Avg Daily Time: {{ report.averageDaily }}</p>
+    </div>
+
+    <div>
+      <h3 class="font-semibold text-black">Behavior Notes</h3>
+      <ul class="list-disc list-inside text-gray-800">
+        <li *ngFor="let note of report.notes">{{ note }}</li>
+      </ul>
+    </div>
+
+    <div>
+      <h3 class="font-semibold text-black">Recommendations</h3>
+      <ul class="list-disc list-inside text-gray-800">
+        <li *ngFor="let rec of report.recommendations">{{ rec }}</li>
+      </ul>
+    </div>
+  </div>
+</div>

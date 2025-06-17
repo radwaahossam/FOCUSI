@@ -1,7 +1,33 @@
+<div *ngIf="showIntroOverlay" class="intro-overlay">
+  <div class="intro-overlay">
+        <h1>Welcome.</h1>
+        <p>Please, Open your camera to evaluate visual focus.</p>
+        <button  (click)="startWithCamera()">Open Camera & Start</button>
+        <button (click)="startWithoutCamera()">Dismiss</button>
+    </div>
+  <!-- <div class="overlay-content">
+    <h2>Choose how to start</h2>
+    <button (click)="startWithCamera()">Start with Camera</button>
+    <button (click)="startWithoutCamera()">Start without Camera</button>
+  </div> -->
+</div>
 
-<div class="w-full h-screen">
-  <iframe 
-    src="/assets/video-test/B1/index.html" 
-    class="w-full h-full border-none"
-  ></iframe>
+<div class="video-container" *ngIf="videoStarted">
+  <video #videoPlayer width="640" height="360" controls>
+    <source src="/assets/video-test/B1/shapesB1.mp4" type="video/mp4" />
+    Your browser does not support the video tag.
+  </video>
+
+  <div *ngIf="cameraEnabled">
+    <div class="congrats-overlay hidden">
+        <h1>🎉 Congratulations! 🎉</h1>
+        <p>You answered <span id="correct-answers">0</span> questions of 5</p>
+        <button id="exit">Exit</button>
+    </div>
+    <div class="over-overlay hidden">
+        <h1>Game Over!</h1>
+        <p>You answered <span id="correct-answers">0</span> questions of 5</p>
+        <button>Try Again</button>
+    </div>
+  </div>
 </div>

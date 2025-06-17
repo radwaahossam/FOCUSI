@@ -30,7 +30,7 @@ export class ChildTestGameComponent implements OnInit {
   timerInterval: any;
   maxTime = 120;
 
-  gameStarted = false; // تم تعديل هذه القيمة لتكون false عند البداية
+  gameStarted = false; 
   showStats = false;
   showGame = false;
   showCongrats = false;
@@ -48,7 +48,6 @@ export class ChildTestGameComponent implements OnInit {
   allCardsFlipped = false;
 
   ngOnInit(): void {
-    // تم تعليق الكود الخاص بالكاميرا هنا
     // this.requestCamera();
   }
 
@@ -87,25 +86,22 @@ export class ChildTestGameComponent implements OnInit {
       matched: false
     })));
 
-    // تقليب الكروت جميعها مؤقتًا
     this.deck.forEach(card => card.flipped = true);
 
-    // إغلاقهم بعد فترة
     setTimeout(() => {
       this.deck.forEach(card => card.flipped = false);
       this.showAllCardsTemporarily = false;
       this.allCardsFlipped = true;
     }, 1000);
 
-    // بدء العد التنازلي
     this.timerInterval = setInterval(() => {
       this.timeElapsed++;
       if (this.timeElapsed >= this.maxTime) {
         clearInterval(this.timerInterval);
         this.showGameOver = true;
-        this.gameStarted = false; // إيقاف اللعبة عند انتهاء الوقت
+        this.gameStarted = false;  
       }
-    }, 1000); // كل ثانية
+    }, 1000); 
   }
 
   shuffle(array: Card[]): Card[] {
@@ -201,8 +197,6 @@ export class ChildTestGameComponent implements OnInit {
     this.stopCameraTracking();
     localStorage.setItem('isChildTestDone', 'true');
     this.router.navigate(['/video-test']);
-
-    // this.router.navigate(['/video-test']);   
   }
 
 

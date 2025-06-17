@@ -4,11 +4,11 @@ import { ChildServiceService } from './../../services/child-service.service';
 import { CommonModule } from '@angular/common';
 import { finalize } from 'rxjs';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-child-profile',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './child-profile.component.html',
   styleUrl: './child-profile.component.css'
 })

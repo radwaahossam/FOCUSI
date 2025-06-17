@@ -1,5 +1,4 @@
 
-
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -112,7 +111,6 @@ onSubmit() {
         console.log('Response from backend:', res); 
         localStorage.setItem('isParentTestDone', 'true');
         this.router.navigate(['/child-test']);
-        // this.router.navigate(['/child-test']);
       },
       error: (err) => {
         console.error('Error sending data:', err);

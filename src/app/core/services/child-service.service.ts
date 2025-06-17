@@ -17,8 +17,6 @@ getChildProfile(): Observable<any> {
   return this.http.get('https://focusi.runasp.net/api/Account/CurrentUser', { headers });
 }
 
-
-
 addProfilePicture(file: File): Observable<any> {
   const formData = new FormData();
   formData.append('Picture', file);
@@ -50,7 +48,6 @@ private sanitizeFileName(name: string): string {
   const extension = name.substring(name.lastIndexOf('.') + 1);
   return `profile_${timestamp}.${extension}`;
 }
-
 }
 
 

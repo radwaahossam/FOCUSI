@@ -48,18 +48,6 @@ export class FeedbackComponent {
     );
   }
 
-  // submitFeedback() {
-  //   if (!this.validateForm()) {
-  //     alert("Please answer all required questions before submitting.");
-  //     return;
-  //   }
-
-  //   // مؤقتًا، طباعة للكونسول بدل من الـ API بسبب CORS
-  //   console.log("Feedback submitted:", this.Feedback);
-  //   this.showThankYouModal = true;
-  //   setTimeout(() => this.showThankYouModal = false, 4000);
-  // }
-
   submitFeedback() {
   if (!this.validateForm()) {
     alert("Please answer all required questions before submitting.");
@@ -88,7 +76,6 @@ export class FeedbackComponent {
     }
   });
 }
-
   closeModal() {
     this.showThankYouModal = false;
     this.router.navigate([`/main/child-profile`])

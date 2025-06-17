@@ -1,4 +1,4 @@
-* {
+/* * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -9,7 +9,6 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  /* background-color: #000; */
   padding: 20px;
 }
 
@@ -186,7 +185,6 @@ video::-moz-range-track {
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  /* transition: background 0.3s; */
 }
 
 .intro-overlay button:hover, .congrats-overlay button:hover, .over-overlay button:hover {
@@ -234,4 +232,4 @@ video::-moz-range-track {
   .questionBox img {
     width: 80px;
   }
-}
+} */
