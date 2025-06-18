@@ -3,6 +3,9 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { ChildServiceService } from '../../../core/services/child-service.service';
+import { ChangeDetectorRef } from '@angular/core'; // ⬅️ تأكد إنه مضاف
+
 
 interface Card {
   value: string;
@@ -19,7 +22,7 @@ interface Card {
 
 export class ChildTestGameComponent implements OnInit {
 
-constructor(private router: Router, private http: HttpClient) {}
+constructor(private router: Router, private http: HttpClient,  private childService: ChildServiceService, private cdr: ChangeDetectorRef) {}
 
   @ViewChild('camera') cameraElement!: ElementRef<HTMLVideoElement>;
 
@@ -31,6 +34,8 @@ constructor(private router: Router, private http: HttpClient) {}
   timerInterval: any;
   maxTime = 120;
 
+   childData: any;
+  showClassModal = false;
 
 truePhotoCount: number = 0;
 totalPhotosSent: number = 0;
@@ -197,11 +202,13 @@ sendGameTestData() {
     });
 }
 
-
   fireConfetti() {
     console.log('🎉 Confetti!');
     this.sendGameTestData();
+    localStorage.setItem('isChildTestDone', 'true');
   }
+
+
 
   toggleMenu() {
     this.showMenu = !this.showMenu;
@@ -231,9 +238,12 @@ sendGameTestData() {
   }
   
   exitGame() {
+      console.log('🚪 Exit Clicked');
+
     this.stopCameraTracking();
     localStorage.setItem('isChildTestDone', 'true');
-    this.router.navigate(['/main/class']);
+    // this.router.navigate(['/main/class']);
+    this.checkAndShowClass();
   }
 
   startCameraTracking() {
@@ -277,4 +287,30 @@ sendGameTestData() {
       this.cameraStream = null;
     }
   }
+
+   private checkAndShowClass() {
+    const gameDone  = localStorage.getItem('isChildTestDone')  === 'true';
+    const videoDone = localStorage.getItem('isVideoTestDone') === 'true';
+    const parentDone = localStorage.getItem('isParentTestDone') === 'true';
+
+    const childDone = gameDone || videoDone;
+
+
+  if (parentDone && childDone && !this.showClassModal) {
+    this.childService.getChildProfile().subscribe({
+      next: res => {
+        this.childData = res.child || res;
+        this.showClassModal = true;
+        this.cdr.detectChanges();
+      },
+        error: err => console.error('❌ getChildProfile:', err)
+      });
+    }
+  }
+
+  confirmClassModal() {
+    this.showClassModal = false;
+    this.router.navigate(['/main/class']);
+  }
+ 
 }

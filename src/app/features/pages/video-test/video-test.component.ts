@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { ChildServiceService } from '../../../core/services/child-service.service';
 
 @Component({
   selector: 'app-interactive-video',
@@ -13,7 +14,7 @@ export class VideoTestComponent {
   @ViewChild('videoPlayer') videoPlayer!: ElementRef<HTMLVideoElement>;
   @ViewChild('cameraFeed') cameraFeed!: ElementRef<HTMLVideoElement>;
 
-  constructor(private router: Router, private httpClient: HttpClient){}
+  constructor(private router: Router, private httpClient: HttpClient,  private childService: ChildServiceService){}
 
  ngOnInit(): void {
   if (typeof window !== 'undefined' && typeof document !== 'undefined') {
@@ -30,6 +31,10 @@ truePhotoCount: number = 0;
 totalPhotosSent: number = 0;
 totalPhotos = 0;
 truePhotos = 0;
+
+
+  childData: any;
+  showClassModal = false;
 
   showIntroOverlay = true;
   videoStarted = false;
@@ -308,6 +313,8 @@ this.httpClient.put('https://focusi.runasp.net/api/Tests/videoTest', payload, {
 .subscribe({
   next: (res) => {
     console.log("✅ Data successfully sent to API:", res);
+      localStorage.setItem('isVideoTestDone', 'true');
+    this.checkAndShowClass();
   },
   error: (err) => {
     console.error("❌ Failed to send API data:", err);
@@ -316,5 +323,27 @@ this.httpClient.put('https://focusi.runasp.net/api/Tests/videoTest', payload, {
 
   document.dispatchEvent(new Event('finishVideoTest'));
 }
+
+
+
+ private checkAndShowClass() {
+    const gameDone  = localStorage.getItem('isChildTestDone')  === 'true';
+    const videoDone = localStorage.getItem('isVideoTestDone') === 'true';
+
+    if (gameDone && videoDone && !this.showClassModal) {
+      this.childService.getChildProfile().subscribe({
+        next: res => {
+          this.childData = res;
+          this.showClassModal = true;
+        },
+        error: err => console.error('❌ getChildProfile:', err)
+      });
+    }
+  }
+
+  confirmClassModal() {
+    this.showClassModal = false;
+    this.router.navigate(['/main/class']);
+  }
 
 }
