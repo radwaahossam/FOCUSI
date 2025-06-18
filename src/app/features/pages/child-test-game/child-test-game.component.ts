@@ -2,6 +2,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 interface Card {
   value: string;
@@ -18,7 +19,7 @@ interface Card {
 
 export class ChildTestGameComponent implements OnInit {
 
-  constructor(private router: Router) {}
+constructor(private router: Router, private http: HttpClient) {}
 
   @ViewChild('camera') cameraElement!: ElementRef<HTMLVideoElement>;
 
@@ -29,6 +30,11 @@ export class ChildTestGameComponent implements OnInit {
   timeElapsed = 0;
   timerInterval: any;
   maxTime = 120;
+
+
+truePhotoCount: number = 0;
+totalPhotosSent: number = 0;
+
 
   gameStarted = false; 
   showStats = false;
@@ -48,7 +54,6 @@ export class ChildTestGameComponent implements OnInit {
   allCardsFlipped = false;
 
   ngOnInit(): void {
-    // this.requestCamera();
   }
 
   async requestCamera() {
@@ -99,7 +104,7 @@ export class ChildTestGameComponent implements OnInit {
       if (this.timeElapsed >= this.maxTime) {
         clearInterval(this.timerInterval);
         this.showGameOver = true;
-        this.gameStarted = false;  
+        this.gameStarted = false; 
       }
     }, 1000); 
   }
@@ -115,7 +120,7 @@ export class ChildTestGameComponent implements OnInit {
     card.flipped = true;
     this.flippedCards.push(index);
     this.totalFlips++;
-    this.playFlipSound(card.value);
+    // this.playFlipSound(card.value);
 
     if (this.flippedCards.length === 2) {
       setTimeout(() => this.checkMatch(), 800);
@@ -145,11 +150,11 @@ export class ChildTestGameComponent implements OnInit {
     this.flippedCards = [];
   }
 
-  playFlipSound(value: string) {
-    if (!this.isSoundOn) return;
-    const audio = new Audio(`assets/sounds/${this.getSoundName(value)}.mp3`);
-    audio.play();
-  }
+  // playFlipSound(value: string) {
+  //   if (!this.isSoundOn) return;
+  //   const audio = new Audio(`assets/sounds/${this.getSoundName(value)}.mp3`);
+  //   audio.play();
+  // }
 
   getSoundName(emoji: string): string {
     switch (emoji) {
@@ -162,8 +167,40 @@ export class ChildTestGameComponent implements OnInit {
     }
   }
 
+sendGameTestData() {
+  const token = localStorage.getItem('userToken');
+
+  const payload = {
+    totalPhotos: parseFloat(this.totalPhotosSent.toFixed(1)),
+    truePhotos: parseFloat(this.truePhotoCount.toFixed(1))
+  };
+
+  fetch('https://focusi.runasp.net/api/Tests/gameTest', {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': `Bearer ${token}`
+    },
+    body: JSON.stringify(payload)
+  })
+    .then(async response => {
+      if (!response.ok) {
+        const errorBody = await response.json();
+        console.error('❌ Failed to send API data:', errorBody);
+        throw new Error(errorBody?.errorMessage || 'API response not OK');
+      }
+      console.log('✅ Game test data sent successfully!');
+    })
+    .catch(error => {
+      console.error('❌ Failed to send API data:', error);
+    });
+}
+
+
   fireConfetti() {
     console.log('🎉 Confetti!');
+    this.sendGameTestData();
   }
 
   toggleMenu() {
@@ -196,35 +233,42 @@ export class ChildTestGameComponent implements OnInit {
   exitGame() {
     this.stopCameraTracking();
     localStorage.setItem('isChildTestDone', 'true');
-    this.router.navigate(['/video-test']);
+    this.router.navigate(['/main/class']);
   }
-
 
   startCameraTracking() {
-    const video = this.cameraElement.nativeElement;
-    const canvas = document.createElement('canvas');
-    const context = canvas.getContext('2d');
+  const video = this.cameraElement.nativeElement;
+  const canvas = document.createElement('canvas');
+  const context = canvas.getContext('2d');
 
-    this.cameraTrackingInterval = setInterval(() => {
-      if (video.readyState === video.HAVE_ENOUGH_DATA) {
-        canvas.width = video.videoWidth;
-        canvas.height = video.videoHeight;
-        context?.drawImage(video, 0, 0, canvas.width, canvas.height);
+  this.cameraTrackingInterval = setInterval(() => {
+    if (video.readyState === video.HAVE_ENOUGH_DATA) {
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      context?.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-        canvas.toBlob(blob => {
-          if (blob) {
-            const formData = new FormData();
-            formData.append('image', blob, 'snapshot.jpg');
+      canvas.toBlob(blob => {
+        if (blob) {
+          const formData = new FormData();
+          formData.append('image', blob, 'snapshot.jpg');
 
-            fetch('https://your-backend.com/api/track-player', {
-              method: 'POST',
-              body: formData
-            }).catch(err => console.error('Camera track failed:', err));
-          }
-        }, 'image/jpeg', 0.8);
-      }
-    }, 5000);
-  }
+          fetch('https://amira44-newfocus.hf.space/predict', {
+            method: 'POST',
+            body: formData
+          })
+          .then(res => res.json())
+          .then(result => {
+            if (result.isFocused === true) {
+              this.truePhotoCount = (this.truePhotoCount || 0) + 1;
+            }
+            this.totalPhotosSent = (this.totalPhotosSent || 0) + 1;
+          })
+          .catch(err => console.error('Camera track failed:', err));
+        }
+      }, 'image/jpeg', 0.8);
+    }
+  }, 5000);
+}
 
   stopCameraTracking() {
     if (this.cameraTrackingInterval) clearInterval(this.cameraTrackingInterval);

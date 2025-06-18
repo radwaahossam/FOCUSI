@@ -1,27 +1,3 @@
-.intro-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.85);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-}
-
-.overlay-content {
-  text-align: center;
-  color: white;
-}
-
-.overlay-content button {
-  margin: 10px;
-  padding: 12px 24px;
-  font-size: 18px;
-  cursor: pointer;
-}
 
 .container {
   position: relative;
@@ -37,6 +13,12 @@ video {
   border-radius: 8px;
 }
 
+video::-webkit-media-controls-timeline,
+video::-moz-range-track {
+  display: none !important;
+}
+
+
 video::-webkit-media-controls-timeline {
   display: none !important;
 }
@@ -45,9 +27,72 @@ video::-moz-range-track {
   display: none !important;
 }
 
+.question-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #A82222; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 250;
+}
+
+.question-box {
+  background: white;
+  padding: 40px 40px;
+  border-radius: 20px;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
+  max-width: 400px;
+  width: 90%;
+}
+
+.question-box h2 {
+  font-size: 2rem;
+  color: #222;
+  margin-bottom: 30px;
+  font-weight: bold;
+}
 
 
-.intro-overlay, .congrats-overlay, .over-overlay {
+.choice-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.choice-wrapper {
+  background-color: #A82222;
+  padding: 16px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.choice-wrapper:hover {
+  transform: scale(1.03);
+}
+
+.choice-wrapper img {
+  width: 300px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  object-fit: contain;
+  border-radius: 5px;
+  border: 1px solid white;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+}
+
+
+.intro-overlay,
+.congrats-overlay,
+.over-overlay {
   position: fixed;
   top: 0; left: 0;
   width: 100vw;
@@ -62,11 +107,15 @@ video::-moz-range-track {
   z-index: 200;
 }
 
-.intro-overlay.hidden, .congrats-overlay.hidden, .over-overlay.hidden {
+.intro-overlay.hidden,
+.congrats-overlay.hidden,
+.over-overlay.hidden {
   display: none;
 }
 
-.intro-overlay h1, .congrats-overlay h1, .over-overlay h1 {
+.intro-overlay h1,
+.congrats-overlay h1,
+.over-overlay h1 {
   font-size: 3rem;
   margin-bottom: 20px;
 }
@@ -76,21 +125,9 @@ video::-moz-range-track {
   margin-bottom: 20px;
 }
 
-.intro-overlay.hidden, .congrats-overlay.hidden, .over-overlay.hidden {
-  display: none;
-}
-
-.intro-overlay h1, .congrats-overlay h1, .over-overlay h1 {
-  font-size: 3rem;
-  margin-bottom: 20px;
-}
-
-.intro-overlay p {
-  font-size: 1.5rem;
-  margin-bottom: 20px;
-}
-
-.intro-overlay button, .congrats-overlay button, .over-overlay button {
+.intro-overlay button,
+.congrats-overlay button,
+.over-overlay button {
   margin-top: 20px;
   font-size: 1.2rem;
   padding: 10px 20px;
@@ -101,7 +138,9 @@ video::-moz-range-track {
   cursor: pointer;
 }
 
-.intro-overlay button:hover, .congrats-overlay button:hover, .over-overlay button:hover {
+.intro-overlay button:hover,
+.congrats-overlay button:hover,
+.over-overlay button:hover {
   background: #620c0c;
   color: #fff;
 }
@@ -111,39 +150,24 @@ video::-moz-range-track {
   margin-bottom: 20px;
 }
 
-.exit-btn {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background-color: #A82222;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 1rem;
-  z-index: 300; 
-}
-
-.exit-btn:hover {
-  background-color: #A82222;
-}
 
 @media (max-width: 650px) {
-  .questionBox {
+  .question-box {
     padding: 25px 20px;
   }
 
-  .questionBox h2 {
-    font-size: 20px;
+  .question-box h2 {
+    font-size: 1.5rem;
   }
 
-  .questionBox button {
-    font-size: 16px;
-    padding: 10px 18px;
-  }
-
-  .questionBox img {
+  .choice-wrapper img {
     width: 80px;
+    height: 80px;
+  }
+
+  .intro-overlay h1,
+  .congrats-overlay h1,
+  .over-overlay h1 {
+    font-size: 2.2rem;
   }
 }

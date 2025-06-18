@@ -7,7 +7,6 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { API_BASE_URL } from './token/api-token';
 import { tokenInterceptor } from './core/interceptors/services/auth/token.interceptor';
-// import { TestStateService } from './features/services/features/services/test-state.service';
 
 
 
@@ -15,7 +14,7 @@ export const appConfig: ApplicationConfig = {
   providers: [provideZoneChangeDetection({ eventCoalescing: true }),
   provideRouter(routes),
   provideClientHydration(withEventReplay()),
-  provideHttpClient(),
+  // provideHttpClient(),
   provideHttpClient(withInterceptors([tokenInterceptor])),
 
   provideAnimationsAsync(),

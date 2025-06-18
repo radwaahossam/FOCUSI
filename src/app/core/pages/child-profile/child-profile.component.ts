@@ -4,7 +4,7 @@ import { ChildServiceService } from './../../services/child-service.service';
 import { CommonModule } from '@angular/common';
 import { finalize } from 'rxjs';
 import { FormsModule } from '@angular/forms';
-import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-child-profile',
@@ -51,7 +51,7 @@ loadChildData() {
 }
 
       this.childData = data;
-      console.log('✅ Child Profile Loaded:', data);
+      console.log('✅ Child Profile Loaded');
     },
     error: (err) => {
       console.error('Error loading child profile', err);
@@ -103,37 +103,6 @@ closeEditModal() {
   this.showEditModal = false;
 }
 
-// onEditFileSelected(event: any) {
-//   const file: File = event.target.files[0];
-//   if (file) {
-//     this.editPictureFile = file;
-//   }
-// }
-
-
-// onSubmitEdit() {
-//   if ((!this.editData.Name || this.editData.Name.trim() === '') && (this.editData.Age == null || this.editData.Age === '')) {
-//   alert('Please fill at least one field to update.');
-//   return;
-// }
-//   this.ChildServiceService.updateChildProfile(
-//     this.editData.name,
-//     +this.editData.age,
-//     this.editPictureFile || undefined
-//   ).subscribe({
-//     next: () => {
-//       alert('Profile updated successfully');
-//       this.loadChildData();
-//       this.closeEditModal();
-//     },
-//     error: (err) => {
-//       console.error('Error updating profile', err);
-//       alert('Error updating profile');
-//     }
-//   });
-// }
-
-
 onSubmitEdit() {
   if (!this.editData.Name || this.editData.Name.trim() === '') {
     alert('Please enter a valid name');
@@ -149,7 +118,6 @@ onSubmitEdit() {
   this.ChildServiceService.updateChildProfile(
     this.editData.Name.trim(),
     Math.floor(parsedAge),  
-    // this.editPictureFile 
   ).subscribe({
     next: () => {
       alert('✅ Profile updated successfully');

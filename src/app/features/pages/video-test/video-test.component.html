@@ -5,29 +5,45 @@
         <button  (click)="startWithCamera()">Open Camera & Start</button>
         <button (click)="startWithoutCamera()">Dismiss</button>
     </div>
-  <!-- <div class="overlay-content">
-    <h2>Choose how to start</h2>
-    <button (click)="startWithCamera()">Start with Camera</button>
-    <button (click)="startWithoutCamera()">Start without Camera</button>
-  </div> -->
 </div>
 
 <div class="video-container" *ngIf="videoStarted">
-  <video #videoPlayer width="640" height="360" controls>
+  <video #videoPlayer width="640" height="360">
     <source src="/assets/video-test/B1/shapesB1.mp4" type="video/mp4" />
     Your browser does not support the video tag.
   </video>
+  <video 
+  #cameraFeed 
+  autoplay 
+  playsinline 
+  muted 
+  style="display: none; width: 320px; height: 240px;"
+></video>
 
-  <div *ngIf="cameraEnabled">
+  <div *ngIf="showQuestionOverlay" class="question-overlay">
+    <div class="question-box">
+      <h2>{{ currentQuestion?.question }}</h2>
+      <div class="choice-list">
+        <div 
+          class="choice-wrapper" 
+          *ngFor="let choice of currentQuestion?.choices" 
+          (click)="handleAnswer(choice)">
+          <img [src]="choice.img" alt="Choice" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+
     <div class="congrats-overlay hidden">
         <h1>🎉 Congratulations! 🎉</h1>
         <p>You answered <span id="correct-answers">0</span> questions of 5</p>
-        <button id="exit">Exit</button>
+        <button id="exit" (click)="handleExit()">Exit</button>
     </div>
     <div class="over-overlay hidden">
         <h1>Game Over!</h1>
         <p>You answered <span id="correct-answers">0</span> questions of 5</p>
         <button>Try Again</button>
-    </div>
   </div>
 </div>
+

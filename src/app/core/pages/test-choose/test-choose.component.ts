@@ -1,28 +1,16 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { Location } from '@angular/common';
-
 
 @Component({
-  selector: 'app-class',
+  selector: 'app-test-choose',
   imports: [ CommonModule, RouterLink ],
-  templateUrl: './class.component.html',
-  styleUrl: './class.component.css'
+  templateUrl: './test-choose.component.html',
+  styleUrl: './test-choose.component.css'
 })
-export class ClassComponent {
-  constructor(private location: Location) {}
+export class TestChooseComponent {
 
-  ngOnInit() {
-    this.location.replaceState('/main/class'); 
-    history.pushState(null, '', window.location.href);
-    
-    window.onpopstate = () => {
-      history.pushState(null, '', window.location.href);
-    };
-  }
-
-  public animatedText = 'Welcome to your class these options to improve your concentration please select any option';
+    public animatedText = 'Child will open the camera in these tests, choose any option to do ';
 
   get firstLine() {
     return this.animatedText.split(' ').slice(0, 4).join(' '); 
@@ -47,4 +35,6 @@ export class ClassComponent {
   get thirdLineArray() {
     return this.thirdLine.split('');
   }
+  
+
 }

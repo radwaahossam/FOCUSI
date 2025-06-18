@@ -110,7 +110,7 @@ onSubmit() {
       next: (res) => {
         console.log('Response from backend:', res); 
         localStorage.setItem('isParentTestDone', 'true');
-        this.router.navigate(['/child-test']);
+        this.router.navigate(['/test-choose']);
       },
       error: (err) => {
         console.error('Error sending data:', err);

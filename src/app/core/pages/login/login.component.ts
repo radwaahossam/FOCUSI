@@ -5,6 +5,7 @@ import { Subscription, timer } from 'rxjs';
 import { AuthService } from '../../services/auth/auth.service';
 import { ErrorMessageComponent } from "../../../shared/components/ui/error-message/error-message.component";
 import { CommonModule } from '@angular/common';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -14,6 +15,9 @@ import { CommonModule } from '@angular/common';
 })
 export class LoginComponent implements OnInit{
 
+  constructor(private authService: AuthService, private _http: HttpClient, private router: Router) {}
+
+
   apiError!: string 
   isCallingApi: boolean = false
   subscription :Subscription = new Subscription()
@@ -21,6 +25,9 @@ export class LoginComponent implements OnInit{
 
   _authService = inject (AuthService)
   _router = inject (Router)
+  _httpClient = inject(HttpClient);
+
+
 
   ngOnInit(): void {
     this.initForm()
@@ -33,33 +40,48 @@ export class LoginComponent implements OnInit{
   );
   }
 
-  login(){
-    console.log(this.loginForm);
-    if(this.loginForm.invalid){
-      this.loginForm.markAllAsTouched()
-    }else{
-      this.apiError= ''
-      this.isCallingApi = true
-      if(this.subscription) this.subscription.unsubscribe()
-        this.subscription = this._authService.loginUser(this.loginForm.value).subscribe({
-        next:(res) => {
-          // console.log(res)
-          this.isCallingApi= false;
-          localStorage.setItem("userToken",res.token)
-          this._authService.saveUser()
-          this._router.navigate(['/parent-test'])
+
+login() {
+  if (this.loginForm.invalid) {
+    this.loginForm.markAllAsTouched();
+    return;
+  }
+
+  this.isCallingApi = true;
+  this.apiError = '';
+
+  this._authService.loginUser(this.loginForm.value).subscribe({
+    next: (res) => {
+      localStorage.setItem('userToken', res.token);
+
+      this._httpClient.get('https://focusi.runasp.net/api/Tests', { responseType: 'text' }).subscribe({
+        next: (responseText) => {
+          console.log(responseText);
+          if (responseText?.includes('Access to Test')) {
+            this._router.navigate(['/parent-test']);
+          } else {
+            this._router.navigate(['/main/class']);
+          }
         },
         error: (err) => {
-        console.log(err);
-        this.apiError = err.error?.errorMessage || err.error?.message || 'Something went wrong';
-        this.isCallingApi = false;
-      },
-        complete() {
+          console.error(err);
+          if (err.status === 403) {
+            this._router.navigate(['/main/class']);
+          } else {
+            this.apiError = 'Something went wrong';
+          }
         }
-      })
+      });
+    },
+    error: (err) => {
+      console.error(err);
+      this.apiError = err.error?.errorMessage || err.error?.message || 'Something went wrong';
+      this.isCallingApi = false;
     }
-  }
-  
+  });
+}
+
+
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }

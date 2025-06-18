@@ -18,16 +18,15 @@ export const routes: Routes = [
         {path:"child-profile", loadComponent:()=> import('./core/pages/child-profile/child-profile.component').then(c=> c.ChildProfileComponent)},
     ] 
     },
-
+    
     {path:"parent-test", loadComponent:()=> import('./features/pages/parent-test/parent-test.component').then(c=> c.ParentTestComponent)},
     {path:"child-test", loadComponent:()=> import('./features/pages/child-test-game/child-test-game.component').then(c=> c.ChildTestGameComponent)},
     {path:"video-test", loadComponent:()=> import('./features/pages/video-test/video-test.component').then(c=> c.VideoTestComponent)},
+    {path:"test-choose", loadComponent:()=> import('./core/pages/test-choose/test-choose.component').then(c=> c.TestChooseComponent)},
     {path:"feedback", loadComponent:()=> import('./core/pages/feedback/feedback.component').then(c=> c.FeedbackComponent)},
     {path:"reports", loadComponent:()=> import('./core/pages/reports/reports.component').then(c=> c.ReportsComponent)},
     {path:"advices", loadComponent:()=> import('./core/pages/advices/advices.component').then(c=> c.AdvicesComponent)},
     {path:"stories", loadComponent:()=> import('./core/pages/stories/stories.component').then(c=> c.StoriesComponent)},
-
-    // {path:"", pathMatch: 'full', loadComponent:()=> import('./core/pages/login/login.component').then(c=> c.LoginComponent)},
 
     {path:"**", loadComponent:()=> import('./core/pages/not-found/not-found.component').then(c=> c.NotFoundComponent )},
     { path: '', redirectTo: 'auth/login', pathMatch: 'full' },

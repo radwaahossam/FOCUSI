@@ -49,13 +49,11 @@
         </div>
         <div>
           <p class="text-gray-500 text-lg">Assigned Class:</p>
-          <p class="text-gray-800">B</p>
-          <p class="text-gray-800">{{ childData?.assignedClass }}</p>
+          <p class="text-gray-800">{{ childData?.childClass }}</p>
         </div>
         <div>
           <p class="text-gray-500 text-lg">Current Score:</p>
-          <p class="text-gray-800">50%</p>
-          <!-- <p class="text-gray-800">{{ childData?.score }}%</p> -->
+          <p class="text-gray-800">{{ childData?.totalScore}}%</p>
         </div>
       </div>
 
@@ -92,9 +90,6 @@
       <input [(ngModel)]="editData.Name" class="w-full border p-2 rounded" placeholder="Name" />
       <label>Age:</label>
        <input type="number" [(ngModel)]="editData.Age" class="w-full border p-2 rounded" placeholder="Age" min="4" max="12" />
-
-      <!-- <label>Picture:</label>
-    <input type="file" (change)="onEditFileSelected($event)"> -->
     </div>
 
     <div class="flex justify-end space-x-2 mt-6">
