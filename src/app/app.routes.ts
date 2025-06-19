@@ -22,6 +22,7 @@ export const routes: Routes = [
     {path:"parent-test", loadComponent:()=> import('./features/pages/parent-test/parent-test.component').then(c=> c.ParentTestComponent)},
     {path:"child-test", loadComponent:()=> import('./features/pages/child-test-game/child-test-game.component').then(c=> c.ChildTestGameComponent)},
     {path:"video-test", loadComponent:()=> import('./features/pages/video-test/video-test.component').then(c=> c.VideoTestComponent)},
+    {path:"videos", loadComponent:()=> import('./features/pages/video-activity/video-activity.component').then(c=> c.VideoActivityComponent)},
     {path:"test-choose", loadComponent:()=> import('./core/pages/test-choose/test-choose.component').then(c=> c.TestChooseComponent)},
     {path:"feedback", loadComponent:()=> import('./core/pages/feedback/feedback.component').then(c=> c.FeedbackComponent)},
     {path:"reports", loadComponent:()=> import('./core/pages/reports/reports.component').then(c=> c.ReportsComponent)},
