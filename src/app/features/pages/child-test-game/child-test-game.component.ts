@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { ChildServiceService } from '../../../core/services/child-service.service';
-import { ChangeDetectorRef } from '@angular/core'; // ⬅️ تأكد إنه مضاف
+import { ChangeDetectorRef } from '@angular/core'; 
 
 
 interface Card {
@@ -238,11 +238,8 @@ sendGameTestData() {
   }
   
   exitGame() {
-      console.log('🚪 Exit Clicked');
-
     this.stopCameraTracking();
     localStorage.setItem('isChildTestDone', 'true');
-    // this.router.navigate(['/main/class']);
     this.checkAndShowClass();
   }
 

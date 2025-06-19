@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { ChildServiceService } from '../../../core/services/child-service.service';
+import { ChangeDetectorRef } from '@angular/core'; 
+
 
 @Component({
   selector: 'app-interactive-video',
@@ -14,7 +16,7 @@ export class VideoTestComponent {
   @ViewChild('videoPlayer') videoPlayer!: ElementRef<HTMLVideoElement>;
   @ViewChild('cameraFeed') cameraFeed!: ElementRef<HTMLVideoElement>;
 
-  constructor(private router: Router, private httpClient: HttpClient,  private childService: ChildServiceService){}
+  constructor(private router: Router, private httpClient: HttpClient,  private childService: ChildServiceService, private cdr: ChangeDetectorRef){}
 
  ngOnInit(): void {
   if (typeof window !== 'undefined' && typeof document !== 'undefined') {
@@ -212,6 +214,8 @@ handleAnswer(choice: any) {
 }
 
 handleExit() {
+  document.querySelector('.congrats-overlay')?.classList.add('hidden');
+  document.querySelector('.over-overlay')?.classList.add('hidden');
   const video = this.videoPlayer.nativeElement;
   if (!video.ended || this.currentQuestionIndex < this.questions.length) {
     alert("Please complete the video and questions first.");
@@ -220,7 +224,7 @@ handleExit() {
 
   this.stopCamera();
   localStorage.setItem('isVideoTestDone', 'true');
-  this.router.navigate(['/main/class']);
+ this.checkAndShowClass();
 }
 
 stopCamera() {
@@ -314,7 +318,6 @@ this.httpClient.put('https://focusi.runasp.net/api/Tests/videoTest', payload, {
   next: (res) => {
     console.log("✅ Data successfully sent to API:", res);
       localStorage.setItem('isVideoTestDone', 'true');
-    this.checkAndShowClass();
   },
   error: (err) => {
     console.error("❌ Failed to send API data:", err);
@@ -325,17 +328,21 @@ this.httpClient.put('https://focusi.runasp.net/api/Tests/videoTest', payload, {
 }
 
 
-
- private checkAndShowClass() {
+private checkAndShowClass() {
     const gameDone  = localStorage.getItem('isChildTestDone')  === 'true';
     const videoDone = localStorage.getItem('isVideoTestDone') === 'true';
+    const parentDone = localStorage.getItem('isParentTestDone') === 'true';
 
-    if (gameDone && videoDone && !this.showClassModal) {
-      this.childService.getChildProfile().subscribe({
-        next: res => {
-          this.childData = res;
-          this.showClassModal = true;
-        },
+    const childDone = gameDone || videoDone;
+
+
+  if (parentDone && childDone && !this.showClassModal) {
+    this.childService.getChildProfile().subscribe({
+      next: res => {
+        this.childData = res.child || res;
+        this.showClassModal = true;
+        this.cdr.detectChanges();
+      },
         error: err => console.error('❌ getChildProfile:', err)
       });
     }
