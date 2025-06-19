@@ -194,7 +194,7 @@ handleAnswer(choice: any) {
     // else {
       console.log("Showing final overlay...");
       this.showFinalOverlay();
-    }
+  }
   }, delay);
 }
 
